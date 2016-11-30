@@ -9,19 +9,17 @@ import javax.persistence.Id;
 public class User
 {
 	@Id
-	@GeneratedValue
-	private int id;
+	private String login;
 	private String name;
 	private String surname;
 	private String mail;
 	private String password;
 	private String grp;
 	
-	@GeneratedValue
-	@Column(name="id")
-	public int getId()
+	@Column(name="login")
+	public String getLogin()
 	{
-		return id;
+		return login;
 	}
 	
 	@Column(name="name")
@@ -54,9 +52,9 @@ public class User
 		return grp;
 	}
 	
-	public void setId( int aid )
+	public void setLogin( String alogin )
 	{
-		id = aid;
+		login = alogin;
 	}
 
 	public void setName( String aname )

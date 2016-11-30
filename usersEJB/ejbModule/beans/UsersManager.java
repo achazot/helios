@@ -17,9 +17,10 @@ public class UsersManager
 	@PersistenceContext(unitName = "heliosPU")
 	private EntityManager em;
 
-	public void register(String name, String surname, String mail, String password, String group)
+	public void register(String login, String name, String surname, String mail, String password, String group)
 	{
 		User user = new User();
+		user.setLogin(login);
 		user.setName(name);
 		user.setSurname(surname);
 		user.setMail(mail);
@@ -33,5 +34,17 @@ public class UsersManager
 	public List<User> getUsers()
 	{
 		return em.createQuery("From User u").getResultList();
+	}
+	
+	/**
+	 * 
+	 * @param mail
+	 * @param password
+	 * @return true if authentication succeed
+	 */
+	public boolean check(String login, String password)
+	{
+		User user = em.find(User.class, login);
+		return ((user != null) && (user.getPassword().equals(password)));
 	}
 }

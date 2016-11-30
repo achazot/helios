@@ -12,8 +12,8 @@
 	
 	<body>
 		<h2>Authentifie ta mère</h2>
-			<form action="Controller">
-			 	<input type="text" name="mail" value ="mail"/>
+			<form action="GlobalController">
+			 	<input type="text" name="login" value ="login"/>
 				<input type="text" name="password" value ="password"/>
 		        <button type="submit" name="userops" value="connect">log in</button>
 		        <button type="submit" name="userops" value="disconnect">log out</button>
