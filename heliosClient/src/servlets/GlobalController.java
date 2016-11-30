@@ -36,6 +36,7 @@ public class GlobalController extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{	
+		
 		if (request.getParameter("userops") != null)
 			handleUserOps(request, response);
 		
@@ -66,11 +67,12 @@ public class GlobalController extends HttpServlet
     		a_password = request.getParameter("password");
     		if(a_login != null && a_password != null && usersManager.check(a_login, a_password))
     		{
-    			request.getSession().setAttribute("login", a_login);
+    			User user = usersManager.getUserByLogin(a_login);
+    			request.getSession().setAttribute("user", user);
     		}
     		break;
     	case "disconnect":
-			request.getSession().setAttribute("login", null);
+			request.getSession().setAttribute("user", null);
     		
     		break;
     	default:
