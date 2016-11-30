@@ -36,11 +36,11 @@ public class GlobalController extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{	
-		
 		if (request.getParameter("userops") != null)
 			handleUserOps(request, response);
 		
-    	request.getRequestDispatcher("index.jsp").forward(request, response);
+		else
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -52,10 +52,12 @@ public class GlobalController extends HttpServlet
 	/**
 	 * @author dibi
 	 * Handles login & logout on pages
+	 * @throws IOException 
+	 * @throws ServletException 
 	 * 
 	 */
 	
-	private void handleUserOps(HttpServletRequest request, HttpServletResponse response)
+	private void handleUserOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String a_login;
 		String a_password;
@@ -69,6 +71,11 @@ public class GlobalController extends HttpServlet
     		{
     			User user = usersManager.getUserByLogin(a_login);
     			request.getSession().setAttribute("user", user);
+    	    	request.getRequestDispatcher("home.jsp").forward(request, response);
+    		}
+    		else
+    		{
+    			request.getRequestDispatcher("index.jsp").forward(request, response);
     		}
     		break;
     	case "disconnect":
