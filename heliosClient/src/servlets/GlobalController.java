@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import beans.UsersManager;
 import entities.User;
 
+/**
+ * 
+ * @author dibi
+ *
+ */
+
 @WebServlet("/GlobalController")
 public class GlobalController extends HttpServlet
 {
@@ -22,46 +28,55 @@ public class GlobalController extends HttpServlet
 
 	@EJB
 	private UsersManager usersManager;
-	
+
 	public GlobalController()
 	{
-		super();		
+		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{	
-		Map<String,String[]> parameters = request.getParameterMap();
 		
+		if (request.getParameter("userops") != null)
+			handleUserOps(request, response);
 		
-		usersManager.register("dibi", "dibi", "dibi", "dibi", "admin");
-
-		if (parameters == null || parameters.isEmpty())
-		{		
-			response.getWriter().append("En construction de ouf\nUsers: ");
-			List<User> users = usersManager.getUsers();
-			for (User u : users)
-			{
-				response.getWriter().append(u.getName()).append("\n");
-			}
-			
-			//this.getServletContext().getRequestDispatcher( "/index.jsp" ).forward( request, response );
-		}
-		else
-		{
-			response.getWriter().append("Parameters: \n");	
-			for (String s : parameters.keySet())
-			{
-				response.getWriter().append("    ").append(s).append(" : \n");
-				for (String p : parameters.get(s))
-				{
-					response.getWriter().append("        ").append(p).append("\n");
-				}
-			}
-		}
+    	request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		doGet(request, response);
 	}
+
+
+	/**
+	 * @author dibi
+	 * Handles login & logout on pages
+	 * 
+	 */
+	
+	private void handleUserOps(HttpServletRequest request, HttpServletResponse response)
+	{
+		String a_mail;
+		String a_password;
+		
+		switch(request.getParameter("userops"))
+    	{	
+    	case "connect":
+    		a_mail = request.getParameter("mail");
+    		a_password = request.getParameter("password");
+    		if(a_mail != null && a_password != null && usersManager.check(a_mail, a_password))
+    		{
+    			request.getSession().setAttribute("mail", a_mail);
+    		}
+    		break;
+    	case "disconnect":
+			request.getSession().setAttribute("mail", null);
+    		
+    		break;
+    	default:
+    		break;
+    	}		
+	}
 }
+
