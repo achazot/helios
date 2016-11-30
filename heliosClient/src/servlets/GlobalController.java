@@ -36,6 +36,9 @@ public class GlobalController extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{	
+		if(request.getSession().getAttribute("trials") == null)
+			request.getSession().setAttribute("trials", 0);
+			
 		if (request.getParameter("userops") != null)
 			handleUserOps(request, response);
 		
@@ -71,16 +74,18 @@ public class GlobalController extends HttpServlet
     		{
     			User user = usersManager.getUserByLogin(a_login);
     			request.getSession().setAttribute("user", user);
+    			request.getSession().setAttribute("trials", 0);
     	    	request.getRequestDispatcher("home.jsp").forward(request, response);
     		}
     		else
     		{
+    			request.getSession().setAttribute("trials", (int)request.getSession().getAttribute("trials") + 1);
     			request.getRequestDispatcher("index.jsp").forward(request, response);
     		}
     		break;
     	case "disconnect":
 			request.getSession().setAttribute("user", null);
-    		
+			request.getRequestDispatcher("index.jsp").forward(request, response);
     		break;
     	default:
     		break;

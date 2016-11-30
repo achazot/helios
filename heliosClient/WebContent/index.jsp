@@ -12,12 +12,15 @@
 	</head>
 	
 	<body>
+		
 		<h2>Authentifie ta mère</h2>
-			<form action="GlobalController">
-			 	<input type="text" name="login" value =""/>
-				<input type="password" name="password" value =""/>
-		        <button type="submit" name="userops" value="connect">log in</button>
-		        <button type="submit" name="userops" value="disconnect">log out</button>
+			<form method="post" action="GlobalController">
+			 	<input type="text" name="login" value ="admin"/>
+				<input type="password" name="password" value ="azerty"/>
+		        <button type="submit" name="userops" value="connect">Connexion</button>
 		    </form>
+		<p>
+			Tentatives de connexion <%=(int) session.getAttribute("trials")%>
+		</p>				    
 	</body>
 </html>

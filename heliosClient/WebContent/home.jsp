@@ -8,23 +8,40 @@
 	<head>
 		<meta charset="utf-8">
 	
-		<title>La base</title>
+		<title>Profil Personnel</title>
 		<meta name="description" content="Index">
 		<meta name="author" content="dibi & kcs">
 	</head>
 	
 	<body>
-		<h2>Si t'es connecté on voit ton nom ici:</h2>
-		<div>
-			<% User user = (User) session.getAttribute("user"); %>
-			<c:if test="${not empty user}">
-				<%=user.getName()%>
-				<%=user.getSurname()%>
-				<%=user.getPassword()%>
-				<%=user.getMail()%>
-				<%=user.getLogin()%>
-				<%=user.getGrp()%>
-			</c:if>
-		</div>
+	
+		<header> 
+			Header
+			<form method="post" action="GlobalController">
+		        <button type="submit" name="userops" value="disconnect">log out</button>
+		    </form>
+		</header>
+		
+		<aside> 
+			<h2>Informations vous concernant</h2>
+			<% User user = (User) session.getAttribute("user"); %>			
+			<ul>
+				<li> Prénom : <%=user.getName()%>
+				<li> Nom : <%=user.getSurname()%>
+			    <li> MdP : <%=user.getPassword()%>
+				<li> Mail : <%=user.getMail()%>
+				<li> Login : <%=user.getLogin()%>
+				<li> Groupe : <%=user.getGrp()%>
+			</ul>	
+		<aside>
+		
+		<% String grp= user.getGrp(); %>     
+		<jsp:include page= "<%=\"./includes/\" + grp + \".jsp\"%>"/>
+
+		<footer> 
+			Footer
+		</footer>
+	
 	</body>
+	
 </html>

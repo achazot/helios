@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -52,5 +53,33 @@ public class UsersManager
 	{
 		User user = em.find(User.class, login);		
 		return user;
+	}
+	
+	public List<User> getUsers(String grp)
+	{
+		List<User> list = em.createQuery("From User u").getResultList();
+		List<User> res = new ArrayList();
+		for(User u : list)
+		{
+			if( u.getGrp().equals(grp) )
+				res.add(u);
+		}
+		return res;
+	}
+	
+	public void deleteUser(String login)
+	{
+		User u = em.find(User.class, login);
+		if(u != null)
+			em.remove(u);
+	}
+
+	public boolean createUser(String name, String surname, String mail, String group, String log, String password) 
+	{
+		if( em.find(User.class, log) != null )
+			return false;
+		else 
+			register(log, name, surname, mail, password, group);
+		return true;
 	}
 }
