@@ -34,4 +34,16 @@ public class UsersManager
 	{
 		return em.createQuery("From User u").getResultList();
 	}
+	
+	/**
+	 * 
+	 * @param mail
+	 * @param password
+	 * @return true if authentication succeed
+	 */
+	public boolean check(String mail, String password)
+	{
+		User user = em.find(User.class, mail);
+		return ((user != null) && (user.getPassword().equals(password)));
+	}
 }

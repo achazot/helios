@@ -32,8 +32,6 @@ public class GlobalController extends HttpServlet
 	{	
 		Map<String,String[]> parameters = request.getParameterMap();
 		
-		
-		usersManager.register("dibi", "dibi", "dibi", "dibi", "admin");
 
 		if (parameters == null || parameters.isEmpty())
 		{		
