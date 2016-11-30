@@ -28,12 +28,11 @@ public class GlobalController extends HttpServlet
 		if (parameters == null || parameters.isEmpty())
 		{		
 			response.getWriter().append("En construction de ouf");
-			//this.getServletContext().getRequestDispatcher( "/index.jsp" ).forward( request, response );
+			this.getServletContext().getRequestDispatcher( "/index.jsp" ).forward( request, response );
 		}
 		else
 		{
-			response.getWriter().append("Parameters: \n");
-	
+			response.getWriter().append("Parameters: \n");	
 			for (String s : parameters.keySet())
 			{
 				response.getWriter().append("    ").append(s).append(" : \n");
