@@ -47,4 +47,10 @@ public class UsersManager
 		User user = em.find(User.class, login);
 		return ((user != null) && (user.getPassword().equals(password)));
 	}
+	
+	public User getUserByLogin(String login)
+	{
+		User user = em.find(User.class, login);		
+		return user;
+	}
 }
