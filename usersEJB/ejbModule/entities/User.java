@@ -4,9 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Student
+public class User
 {
 	@Id
 	@GeneratedValue
@@ -15,7 +16,8 @@ public class Student
 	private String surname;
 	private String mail;
 	private String password;
-
+	private String group;
+	
 	@GeneratedValue
 	@Column(name="id")
 	public int getId()
@@ -47,29 +49,40 @@ public class Student
 		return password;
 	}
 
-	public int setId()
+	@Column(name="group")
+	public String getGroup()
 	{
-		return id;
+		return group;
+	}
+	
+	public void setId( int aid )
+	{
+		id = aid;
 	}
 
-	public String setName()
+	public void setName( String aname )
 	{
-		return name;
+		name = aname;
 	}
 
-	public String setSurname()
+	public void setSurname( String asurname )
 	{
-		return surname;
+		surname = asurname;
 	}
 
-	public String setMail()
+	public void setMail( String amail )
 	{
-		return mail;
+		mail = amail;
 	}
 
-	public String setPassword()
+	public void setPassword( String apassword )
 	{
-		return password;
+		password = apassword;
+	}
+
+	public void setGroup( String agroup )
+	{
+		group = agroup;
 	}
 
 
