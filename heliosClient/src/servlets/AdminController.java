@@ -93,19 +93,36 @@ public class AdminController extends HttpServlet
     		
     		request.setAttribute("accountForm", "1");
     		
+    		// empty fields
     		if( name.equals("") || surname.equals("") || mail.equals("") || group.equals("") || log.equals("") 	|| password.equals("") 	)
     		{
-    			System.out.println(">>>>>>>> equals name" + name);
     			request.setAttribute("errorForm", "Veuillez renseigner tous les champs svp");
     		}
     		else
     		{
-    			if( usersManager.createUser(name, surname, mail, group, log, password) )
-    			{	// this login is not used
+    			// control inputs validity
+    			String err = ""; 
+	    		err += ! tools.InputControl.checkOnlyAlphabetic(name) ? "Le champs prénom doit être composé uniquement de caractères alphabétiques <br>" : "";
+	    		err += ! tools.InputControl.checkOnlyAlphabetic(surname) ? "Le champs nom doit être composé uniquement de caractères alphabétiques <br>" : "";
+	    		err += ! tools.InputControl.checkNoSQL(log) ? "Le champs identifiant ne doit pas comporter de <a href=\"https://docs.oracle.com/database/121/SQLRF/ap_keywd001.htm#SQLRF55621\">mots réservés au langage SQL</a> <br>" :"";
+	    		err += ! tools.InputControl.checkNoSQL(password) ? "Le champs mot de passe ne doit pas comporter de <a href=\"https://docs.oracle.com/database/121/SQLRF/ap_keywd001.htm#SQLRF55621\">mots réservés au langage SQL</a> <br>" :"";
+	    		err += ! tools.InputControl.checkMail(mail) ? "Le champs mail doit être de la forme <[a-zA-z-.]>@helios.fr" : ""; 
+	    		
+	    		// inputs threw error(s) 
+	    		if( ! err.equals("") )
+				{	  
+    				request.setAttribute("errorForm", err);
+	    		}
+	    		
+	    		// account successfully created 
+	    		else if( usersManager.createUser(name, surname, mail, group, log, password) )
+    			{	
     				request.removeAttribute("errorForm");
         			request.setAttribute("accountForm", null);
         			request.setAttribute("userCreated", true);
     			}
+	    		
+	    		// login already used
     			else
     				request.setAttribute("errorForm", "Cet identifiant est déja utilisé, veuillez en choisir un autre");
     		}

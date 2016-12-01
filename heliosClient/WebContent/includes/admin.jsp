@@ -48,9 +48,15 @@
 
 <!-- Create account -->
 <h1>Créer un compte</h1>
+	
 <form method="post" action="AdminController"> 
 	<button type="submit" name="adminops" value="getForm">Go</button>
 </form>
+
+<!-- Success control -->
+<c:if test="${not empty userCreated}">
+	<strong style="color:green;"> Un utilisateur a été créé avec succès <br></strong>
+</c:if>	
 
 <c:choose>
 	<c:when test="${not empty accountForm}">
@@ -58,7 +64,7 @@
 		
 		<!-- Error control -->
 		<c:if test="${not empty errorForm}">
-			<strong> <br> Erreur : ${errorForm}</strong>
+			<strong style="color:red;"> <br> Erreur : ${errorForm}</strong>
 		</c:if>	
 		
 		<!-- Account creation form -->		
@@ -67,7 +73,7 @@
 			<input type="text" name="surname_form" maxlength="10"><br>
   			Prénom:<br>
   			<input type="text" name="name_form" maxlength="10"><br>
-  			Email:<br>
+  			Email (doit se terminer par @helios.fr):<br>
 			<input type="email" name="mail_form"><br>
   			Goupe:<br>
   			<select name="grp_form">
@@ -80,7 +86,9 @@
   			<input type="password" name="password_form">
   			<button type="submit" name="adminops" value="submitForm">Valider</button>
 		</form>
-		
+		<c:if test="${not empty userCreated}">
+			${userCreated}
+		</c:if>
 	</c:when>
 </c:choose>
 
