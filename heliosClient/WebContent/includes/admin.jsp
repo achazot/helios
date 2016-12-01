@@ -64,7 +64,7 @@
 		
 		<!-- Error control -->
 		<c:if test="${not empty errorForm}">
-			<strong style="color:red;"> <br> Erreur : ${errorForm}</strong>
+			<strong style="color:red;"> <br> Erreur(s) : <br> ${errorForm}</strong>
 		</c:if>	
 		
 		<!-- Account creation form -->		
@@ -81,9 +81,9 @@
   				<option value="teacher">Professeur</option>
   			</select><br>
   			Identifiant de connexion:<br>
-			<input type="text" name="login_form"><br>
+			<input type="text" name="login_form" value="login"><br>
   			Mot de passe:<br>
-  			<input type="password" name="password_form">
+  			<input type="password" name="password_form" value="1234">
   			<button type="submit" name="adminops" value="submitForm">Valider</button>
 		</form>
 		<c:if test="${not empty userCreated}">

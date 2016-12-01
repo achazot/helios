@@ -14,8 +14,7 @@ public class InputControl {
 	{
 		Pattern p = Pattern.compile("([a-zA-Z]){1,10}"); 
 		Matcher m = p.matcher(field); 
-		boolean b = m.matches() ;
-		return b;
+		return m.matches();
 	}
 
 	/**
@@ -27,8 +26,7 @@ public class InputControl {
 	{
 		Pattern p = Pattern.compile("^[a-zA-Z0-9.]+@helios.fr"); 
 		Matcher m = p.matcher(mail); 
-		boolean b = m.matches() ;
-		return b;
+		return m.matches() ;
 	}
 
 	/**
@@ -40,7 +38,6 @@ public class InputControl {
 	{
 		Pattern p = Pattern.compile(".*(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1}).*", Pattern.CASE_INSENSITIVE); 
 		Matcher m = p.matcher(field); 
-		boolean b = m.matches() ;
-		return ( b == false );
+		return ( ! m.matches() );
 	}
 }
