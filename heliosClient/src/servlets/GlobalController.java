@@ -39,7 +39,7 @@ public class GlobalController extends HttpServlet
 		if(request.getSession().getAttribute("trials") == null)
 			request.getSession().setAttribute("trials", 0);
 			
-		if (request.getParameter("userops") != null)
+		if (request.getParameter("userops") != null )
 			handleUserOps(request, response);
 		
 		else
@@ -86,6 +86,10 @@ public class GlobalController extends HttpServlet
     	case "disconnect":
 			request.getSession().setAttribute("user", null);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
+    		break;
+    	case "infos":
+    		request.setAttribute("infos", true);
+			request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     	default:
     		break;

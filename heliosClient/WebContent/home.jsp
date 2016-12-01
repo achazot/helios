@@ -18,21 +18,30 @@
 		<header> 
 			Header
 			<form method="post" action="GlobalController">
-		        <button type="submit" name="userops" value="disconnect">log out</button>
+		        <button type="submit" name="userops" value="disconnect">Déconnexion</button>
 		    </form>
 		</header>
 		
 		<aside> 
-			<h2>Informations vous concernant</h2>
-			<% User user = (User) session.getAttribute("user"); %>			
-			<ul>
-				<li> Prénom : <%=user.getName()%>
-				<li> Nom : <%=user.getSurname()%>
-			    <li> MdP : <%=user.getPassword()%>
-				<li> Mail : <%=user.getMail()%>
-				<li> Login : <%=user.getLogin()%>
-				<li> Groupe : <%=user.getGrp()%>
-			</ul>	
+			<% User user = (User) session.getAttribute("user"); %>	
+			
+			<h2>Voir les informations vous concernant</h2>
+			
+			<form method="post" action="GlobalController"> 
+				<button type="submit" name="userops" value="infos">Go</button>
+			</form>
+			
+			<!-- Personal informations -->
+			<c:if test="${not empty infos}">		
+				<ul>
+					<li> Prénom : <%=user.getName()%>
+					<li> Nom : <%=user.getSurname()%>
+				    <li> MdP : <%=user.getPassword()%>
+					<li> Mail : <%=user.getMail()%>
+					<li> Login : <%=user.getLogin()%>
+					<li> Groupe : <%=user.getGrp()%>
+				</ul>	
+			</c:if>	
 		<aside>
 		
 		<% String grp= user.getGrp(); %>     
