@@ -6,7 +6,7 @@
 
 <form method="post" action="TeacherController"> 
 
-	<input type="hidden" name="teacherLogin" value="${param.login}"/>
+	<input type="hidden" name="teacher" value="${param.user}"/>
 	<button type="submit" name="teacherops" value="browseModules">Go</button>
 </form>
 ${param.login}

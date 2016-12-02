@@ -47,7 +47,7 @@
 		
 		<% String grp= user.getGrp(); %>     
 		<jsp:include page= "<%=\"./includes/\" + grp + \".jsp\"%>">
-			<jsp:param name="login" value="<%=user.getLogin()%>"/>
+			<jsp:param name="user" value="<%=user%>"/>
     	</jsp:include>
 		<footer> 
 			Footer

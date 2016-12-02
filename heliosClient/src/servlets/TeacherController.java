@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.ModulesManager;
 import beans.UsersManager;
+import entities.Module;
 import entities.User;
 
 @WebServlet("/TeacherController")
@@ -18,8 +20,8 @@ public class TeacherController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
-	//@EJB
-	//private ModulesManager modsManager;
+	@EJB
+	private ModulesManager modsManager;
 
 	public TeacherController()
 	{
@@ -51,11 +53,13 @@ public class TeacherController extends HttpServlet
 		switch(request.getParameter("teacherops"))
     	{	
     	case "browseModules":	// display modules list
-//    		List<Module> mList = modsManager.getModules();
+    		List<Module> mList = modsManager.getModules( request.getParameter( "teacher" ) );
 //    		request.setAttribute("modules", mList);
-    		System.out.println( "YOOOOOOO >>>>>> "+ (String)request.getParameter("teacherLogin") );
-    		request.setAttribute("modules", request.getParameter("teacherLogin"));
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		
+    		
+    		// System.out.println( "YOOOOOOO >>>>>> "+ (Strring)request.getParameter("teacher") );
+    		// request.setAttribute("modules", request.getParameter("teacherLogin"));
+    		// request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
 
     	default:
