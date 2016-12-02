@@ -55,6 +55,7 @@ public class UsersManager
 		return user;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<User> getUsers(String grp)
 	{
 		List<User> list = em.createQuery("From User u").getResultList();
