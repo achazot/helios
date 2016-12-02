@@ -93,7 +93,7 @@ public class AdminController extends HttpServlet
     		request.setAttribute("accountForm", "1");
     		
     		// empty fields
-    		if( name.equals("") || surname.equals("") || mail.equals("") || group.equals("") || log.equals("") 	|| password.equals("") 	)
+    		if( name.isEmpty() || surname.isEmpty() || mail.isEmpty() || group.isEmpty() || log.isEmpty() || password.isEmpty() )
     		{
     			request.setAttribute("errorForm", "Veuillez renseigner tous les champs svp");
     		}
@@ -108,7 +108,7 @@ public class AdminController extends HttpServlet
 	    		err += ! tools.InputControl.checkMail(mail) ? "Le champs mail doit être de la forme <[a-zA-z-.]>@helios.fr" : ""; 
 	    		
 	    		// inputs threw error(s) 
-	    		if( ! err.equals("") )
+	    		if( ! err.isEmpty() )
 				{	  
     				request.setAttribute("errorForm", err);
 	    		}
