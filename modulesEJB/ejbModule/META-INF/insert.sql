@@ -3,3 +3,4 @@ INSERT INTO "USER" VALUES('thomas', 'student','thomas@helios.fr', 'bailly', 'aze
 INSERT INTO "USER" VALUES('jazzy', 'student','jazy@helios.fr', 'ngosso', 'azerty', 'jason');
 INSERT INTO "USER" VALUES('bertho', 'teacher','teacherBertho@helios.fr', 'berthome', 'azerty', 'pascal', );
 INSERT INTO "USER" VALUES('clemou', 'teacher','teacherClemou@helios.fr', 'clemente', 'azerty', 'patrice', );
+INSERT INTO "MODULE" VALUES(1, 'graphes', 'bertho');
