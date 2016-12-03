@@ -39,8 +39,8 @@ public class ModulesManager
 	@SuppressWarnings("unchecked")
 	public List<Module> getModules(User teacher)
 	{
-		Query query = em.createQuery("Select m from Module m where m.teacher:=arg1");
-		query.setParameter("arg1", teacher);
+		Query query = em.createQuery("Select m from Module m where m.teacher = ?1");
+		query.setParameter(1, teacher);
 		return query.getResultList();
 	}
 	

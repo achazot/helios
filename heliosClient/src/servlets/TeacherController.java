@@ -29,7 +29,7 @@ public class TeacherController extends HttpServlet
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{				
+	{		
 		if (request.getParameter("teacherops") != null)
 			handleTeacherOps(request, response);
 	}
@@ -53,13 +53,9 @@ public class TeacherController extends HttpServlet
 		switch(request.getParameter("teacherops"))
     	{	
     	case "browseModules":	// display modules list
-    		List<Module> mList = modsManager.getModules( request.getParameter( "teacher" ) );
-//    		request.setAttribute("modules", mList);
-    		
-    		
-    		// System.out.println( "YOOOOOOO >>>>>> "+ (Strring)request.getParameter("teacher") );
-    		// request.setAttribute("modules", request.getParameter("teacherLogin"));
-    		// request.getRequestDispatcher("home.jsp").forward(request, response);
+    		List<Module> mList = modsManager.getModules( (User) ( request.getSession().getAttribute("user") ) );
+    		request.setAttribute("modules", mList); 
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
 
     	default:
