@@ -88,7 +88,7 @@ public class GlobalController extends HttpServlet
     		break;
     	case "infos":
     		request.setAttribute("infos", true);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     	default:
     		break;

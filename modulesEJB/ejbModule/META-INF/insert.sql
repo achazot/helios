@@ -5,15 +5,15 @@ INSERT INTO "USER" VALUES('sheitan', 'student','sheitan@helios.fr', 'colas', 'az
 INSERT INTO "USER" VALUES('bertho', 'teacher','teacherBertho@helios.fr', 'berthome', 'azerty', 'pascal' );
 INSERT INTO "USER" VALUES('clemou', 'teacher','teacherClemou@helios.fr', 'clemente', 'azerty', 'patrice' );
 INSERT INTO "USER" VALUES('benji', 'teacher','inria@helios.fr', 'benjamin', 'azerty', 'nguyen' );
-INSERT INTO "MODULE" VALUES(1, 'theorie des graphes', 'bertho');
-INSERT INTO "MODULE" VALUES(2, 'intelligence artificielle', 'clemou');
-INSERT INTO "MODULE" VALUES(3, 'logique', 'clemou');
-INSERT INTO "MODULE" VALUES(4, 'SGBDR', 'benji');
-INSERT INTO "MODULE" VALUES(5, 'OOP', 'benji');
-INSERT INTO "SUBSCRIPTION" VALUES(1, NULL, 1, 'thomas');
-INSERT INTO "SUBSCRIPTION" VALUES(2, NULL, 2, 'thomas');
-INSERT INTO "SUBSCRIPTION" VALUES(3, NULL, 3, 'sheitan');
-INSERT INTO "SUBSCRIPTION" VALUES(4, NULL, 4, 'sheitan');
-INSERT INTO "SUBSCRIPTION" VALUES(5, NULL, 5, 'sheitan');
-INSERT INTO "SUBSCRIPTION" VALUES(6, NULL, 2, 'jazzy');
+INSERT INTO "MODULE" VALUES(91, 'theorie des graphes', 'bertho');
+INSERT INTO "MODULE" VALUES(92, 'intelligence artificielle', 'clemou');
+INSERT INTO "MODULE" VALUES(93, 'logique', 'clemou');
+INSERT INTO "MODULE" VALUES(94, 'SGBDR', 'benji');
+INSERT INTO "MODULE" VALUES(95, 'OOP', 'benji');
+INSERT INTO "SUBSCRIPTION" VALUES(91, NULL, 91, 'thomas');
+INSERT INTO "SUBSCRIPTION" VALUES(92, NULL, 92, 'thomas');
+INSERT INTO "SUBSCRIPTION" VALUES(93, NULL, 93, 'sheitan');
+INSERT INTO "SUBSCRIPTION" VALUES(94, NULL, 94, 'sheitan');
+INSERT INTO "SUBSCRIPTION" VALUES(95, NULL, 95, 'sheitan');
+INSERT INTO "SUBSCRIPTION" VALUES(96, NULL, 92, 'jazzy');
 

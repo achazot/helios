@@ -41,22 +41,22 @@ public class StudentController extends HttpServlet
 	private void handleStudentOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		User user = (User) request.getSession().getAttribute("user");
+		List<Module> mList = modsManager.getModules( );
+		List<Module> mSubsList = modsManager.getModules( user );
 		switch(request.getParameter("studentops"))
     	{	
     	case "browseModules":	// display modules list
-    		List<Module> mList = modsManager.getModules( );
     		request.setAttribute("modules", mList); 
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     	case "listSubscriptions":	// display subscription list
-    		List<Module> mSubsList = modsManager.getModules( user );
     		request.setAttribute("subs", mSubsList); 
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     	case "subscribe":	// display subscription list
-    		Module module = modsManager.findModuleByPK((String) request.getParameter("module"));
+    		Module module = modsManager.findModuleByPK(mList, Integer.parseInt(request.getParameter("module")));
     		modsManager.studentSubscribe(user, module);
     		request.removeAttribute("module");
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");

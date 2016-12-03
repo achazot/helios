@@ -18,12 +18,11 @@
 				<c:forEach items="${modules}" var="module">
 				<li> ${module.title}
 				<!-- Operate on current entry -->		
-					<form method="post" action="AdminController"> 
-						<input type="hidden" name="login" value="${student.login}">
-						<button type="submit" name="adminops" value="delete">Supprimer</button>
+					<form method="post" action="TeacherController"> 
+						<input type="hidden" name="module" value="${module.id}">
+						<button type="submit" name="teacherops" value="viewModule"> Voir </button>
 					</form>
 				</c:forEach>
 			</ul>
 	</c:when>
 </c:choose>
-
