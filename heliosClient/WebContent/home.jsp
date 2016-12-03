@@ -45,8 +45,8 @@
 			</c:if>	
 		<aside>
 		
-		<% String grp= user.getGrp(); %>     
-		<jsp:include page= "<%=\"./includes/\" + grp + \".jsp\"%>">
+    	<% String viewpage =(String) session.getAttribute("viewPage"); %>
+    	<jsp:include page= "<%=viewpage%>">
 			<jsp:param name="test" value="<%=user%>"/>
     	</jsp:include>
 		<footer> 

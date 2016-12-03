@@ -55,6 +55,9 @@ public class AdminController extends HttpServlet
 	
 	private void handleAdminOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		User user = (User) request.getSession().getAttribute("user");
+		request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+
 		switch(request.getParameter("adminops"))
     	{	
     	case "browseStudents":	// display students list

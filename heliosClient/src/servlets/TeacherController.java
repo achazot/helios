@@ -50,11 +50,13 @@ public class TeacherController extends HttpServlet
 	
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		User user = (User) request.getSession().getAttribute("user");
 		switch(request.getParameter("teacherops"))
     	{	
     	case "browseModules":	// display modules list
-    		List<Module> mList = modsManager.getModules( (User) ( request.getSession().getAttribute("user") ) );
+    		List<Module> mList = modsManager.getModules( user );
     		request.setAttribute("modules", mList); 
+			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
 
