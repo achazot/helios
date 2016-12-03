@@ -46,6 +46,8 @@
 		<aside>
 		
     	<% String viewpage =(String) session.getAttribute("viewPage"); %>
+    	
+    	<%=viewpage%>
     	<jsp:include page= "<%=viewpage%>">
 			<jsp:param name="test" value="<%=user%>"/>
     	</jsp:include>

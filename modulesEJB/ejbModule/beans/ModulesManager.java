@@ -72,4 +72,14 @@ public class ModulesManager
 			//sub.setDate();
 		}
 	}
+	
+	public Module findModuleByPK(List<Module> mList, int mId)
+	{
+		for(Module m : mList)
+		{
+			if( m.getId() == mId )
+				return m;
+		}
+		return null; 
+	}
 }

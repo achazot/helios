@@ -26,7 +26,7 @@ public class QCM
 	
 	
 /** TODO : add this when chapter class is done  + getter & setter **/	
-//	@ManyToOne 
+//	@OneToOne 
 //	private Chapter chapter; 
 	
 	@Column(name="id")
