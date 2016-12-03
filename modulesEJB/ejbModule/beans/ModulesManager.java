@@ -18,14 +18,16 @@ public class ModulesManager
 	@PersistenceContext(unitName = "heliosPU")
 	private EntityManager em;
 
-	public void createModule(String title, String teacher)
+	public void create(String title, User teacher)
 	{
-
-		Module module = new Module();
-		module.setTitle(title);
-		module.setTeacher(teacher);
+		if (teacher.getGrp().equals("teacher"))
+		{
+			Module module = new Module();
+			module.setTitle(title);
+			module.setTeacher(teacher);
 			
-		em.persist(module);
+			em.persist(module);
+		}
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -35,10 +37,10 @@ public class ModulesManager
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Module> getModules(String teacherId)
+	public List<Module> getModules(User teacher)
 	{
 		Query query = em.createQuery("Select m from Module m where m.teacher:=arg1");
-		query.setParameter("arg1", teacherId);
+		query.setParameter("arg1", teacher);
 		return query.getResultList();
 	}
 	

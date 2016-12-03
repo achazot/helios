@@ -15,7 +15,7 @@ public class Module
 	private int id;
 	private String title;
 	@ManyToOne
-	private String teacher;
+	private User teacher;
 
 	@Column(name="id")
 	public int getId()
@@ -30,7 +30,7 @@ public class Module
 	}
 	
 	@Column(name="teacher")
-	public String getTeacher()
+	public User getTeacher()
 	{
 		return teacher;
 	}
@@ -45,7 +45,7 @@ public class Module
 		title = atitle;
 	}
 
-	public void setTeacher( String ateacher )
+	public void setTeacher( User ateacher )
 	{
 		teacher = ateacher;
 	}
