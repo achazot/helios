@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import entities.Module;
+import entities.Subscription;
 import entities.User;
 
 @Stateless
@@ -18,7 +19,14 @@ public class ModulesManager
 	@PersistenceContext(unitName = "heliosPU")
 	private EntityManager em;
 
-	public void create(String title, User teacher)
+		
+	/**
+	 ****************** createModule ****************
+	 * 
+	 * @param title
+	 * @param teacher
+	 */
+	public void createModule(String title, User teacher)
 	{
 		if (teacher.getGrp().equals("teacher"))
 		{
@@ -29,7 +37,12 @@ public class ModulesManager
 			em.persist(module);
 		}
 	}
-		
+
+	/**
+	 ****************** getModules ****************
+	 *
+	 * @return module list
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Module> getModules()
 	{
@@ -44,4 +57,19 @@ public class ModulesManager
 		return query.getResultList();
 	}
 	
+	
+	/**
+	 ************** studentSubscribe **************
+	 *
+	 * @param student
+	 * @param module
+	 */
+	public void studentSubscribe(User student, Module module)
+	{
+		if (student.getGrp().equals("student"))
+		{
+			Subscription sub = new Subscription();
+			//sub.setDate();
+		}
+	}
 }
