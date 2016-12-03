@@ -1,5 +1,6 @@
 package beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -50,11 +51,23 @@ public class ModulesManager
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Module> getModules(User teacher)
+	public List<Module> getModules(User user)
 	{
-		Query query = em.createQuery("Select m from Module m where m.teacher = ?1");
-		query.setParameter(1, teacher);
-		return query.getResultList();
+		if (user.getGrp().equals("teacher"))
+		{
+			Query query = em.createQuery("Select m from Module m where m.teacher = ?1");
+			query.setParameter(1, user);
+			return query.getResultList();
+		}
+		else if (user.getGrp().equals("student"))
+		{
+			Query query = em.createQuery("select s.module from Subscription s where s.student = ?1");
+			query.setParameter(1, user);
+			return query.getResultList();
+		}
+		else
+			return null;
+		
 	}
 	
 	
@@ -69,7 +82,13 @@ public class ModulesManager
 		if (student.getGrp().equals("student"))
 		{
 			Subscription sub = new Subscription();
-			//sub.setDate();
+			sub.setDate(new Date());
+			sub.setModule(module);
+			sub.setStudent(student);
+			
+			em.persist(sub);
 		}
 	}
+
+
 }
