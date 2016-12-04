@@ -24,7 +24,7 @@
 					</c:when>	
 					<c:otherwise>
 						<form method="post" action="TeacherController"> 
-							<input type="hidden" name="module" value="${module.id}">
+							<input type="hidden" name="chapter" value="${chapter.id}">
 							<button type="submit" name="teacherops" value="viewQCM">Voir le QCM</button>
 						</form>
 					</c:otherwise>

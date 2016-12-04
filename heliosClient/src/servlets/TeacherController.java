@@ -16,6 +16,8 @@ import beans.QCMsManager;
 import beans.UsersManager;
 import entities.Chapter;
 import entities.Module;
+import entities.QCM;
+import entities.Question;
 import entities.User;
 
 @WebServlet("/TeacherController")
@@ -63,9 +65,10 @@ public class TeacherController extends HttpServlet
 		// current module & chapter 
 		int mId;
 		int cId;
+				
 		Module module = null;
 		Chapter chapter = null; 
-		
+				
 		// get module object
 		if( request.getParameter( "module" ) != null )
 		{
@@ -120,7 +123,13 @@ public class TeacherController extends HttpServlet
     		}
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	// TODO : case "viewQCM", with statistics
+    	case "viewQCM":
+    		QCM qcm = qcmManager.getQCMByChapter( chapter );
+    		List<Question> qList = qcmManager.getQuestions( qcm ); 
+    		request.getSession().setAttribute("questions", qList);
+			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break; 
     	default:
     		break;
     	}		
