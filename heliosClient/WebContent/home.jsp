@@ -8,10 +8,26 @@
 
 	<head>
 		<meta charset="utf-8">
-	
 		<title>Profil Personnel</title>
 		<meta name="description" content="Index">
 		<meta name="author" content="dibi & kcs">
+		
+		<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+		        rel = "stylesheet">
+		<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>    
+		<!-- Javascript date picker -->
+		<script>
+			$(function() {
+	            $( "#datepicker-5" ).datepicker({
+	               beforeShowDay : function (date) {
+	                  var dayOfWeek = date.getDay ();
+	                  if (dayOfWeek == 0 || dayOfWeek == 6) return [false];
+	                  else return [true];
+	               }
+	            });
+	         });
+		</script>
 	</head>
 	
 	<body>

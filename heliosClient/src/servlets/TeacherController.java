@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import beans.ModulesManager;
 import beans.QCMsManager;
 import beans.UsersManager;
+import entities.Chapter;
 import entities.Module;
 import entities.User;
 
@@ -55,8 +56,29 @@ public class TeacherController extends HttpServlet
 	@SuppressWarnings("deprecation")
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		User user = (User) request.getSession().getAttribute("user");
+		// current user & module list 
+		User user = (User) request.getSession().getAttribute("user"); 
 		List<Module> mList = modsManager.getModules( user );
+		
+		// current module & chapter 
+		int mId;
+		int cId;
+		Module module = null;
+		Chapter chapter = null; 
+		
+		// get module object
+		if( request.getParameter( "module" ) != null )
+		{
+			mId  = Integer.parseInt( request.getParameter("module") );
+			module = modsManager.findModuleByPK(mList, mId);
+		}
+		
+		// get chapter object 
+		if( request.getParameter( "chapter" ) != null )
+		{
+			cId = Integer.parseInt( request.getParameter("chapter") );
+			chapter = modsManager.findChapterByPK( cId );
+		}
 		
 		switch(request.getParameter("teacherops"))
     	{	
@@ -65,21 +87,40 @@ public class TeacherController extends HttpServlet
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "viewModule":	
-    		int id = Integer.parseInt( request.getParameter("module") );
-    		Module module = modsManager.findModuleByPK(mList, (int)id);
+    	case "viewModule":		// display chapters list in selected module)
+    		List<Chapter> cList = modsManager.getChapters( module );
+    		request.getSession().setAttribute("chapters", cList);
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "createQCM":	// create new QCM
-    		String title = request.getParameter("title");
-    		String chapter = request.getParameter("chapter");
-    		int total = Integer.parseInt( request.getParameter("total") ); 
-    		qcmManager.createQCM( title, total, new Date("01/01/2017"), true);
-    		request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    	case "getChapterForm":	// get Chapter creation form TODO
+    			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
+    		break;
+    	case "getQCMForm":		// get QCM creation form    		
+    		request.getSession().setAttribute("module", module);
+    		request.getSession().setAttribute("chapter", chapter);
+    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
-    		break;	
+    		break;
+    	case "createQCM":		// create new QCM
+    		String title = request.getParameter( "chapterTitle" );
+    		boolean b = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
+    		int total = Integer.parseInt( request.getParameter( "total" ) ); 
+    		Date creation = new Date();
+    		Date expiration = new Date( request.getParameter("expiration") );
+    		if( creation.after(expiration) )
+    		{
+				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
+    		}
+    		else
+    		{	
+    			qcmManager.createQCM( title, total, creation, expiration, b, chapter );
+    			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    		}
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break;
+    	// TODO : case "viewQCM", with statistics
     	default:
     		break;
     	}		

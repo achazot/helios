@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -9,9 +10,11 @@ import javax.persistence.ManyToOne;
 public class Chapter
 {
 	@Id
+	@GeneratedValue
 	private int id;
 	private String title;
 	private String text;
+	private boolean qcm; 
 	@ManyToOne
 	private Module module;
 	
@@ -53,5 +56,15 @@ public class Chapter
 	public void setModule(Module module)
 	{
 		this.module = module;
+	}
+	
+	@Column(name="qcm")
+	public boolean getQcm()
+	{
+		return qcm;
+	}
+	public void setQcm(boolean b)
+	{
+		this.qcm = b;
 	}	
 }

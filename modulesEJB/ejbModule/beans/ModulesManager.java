@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import entities.Chapter;
 import entities.Module;
 import entities.Subscription;
 import entities.User;
@@ -98,5 +99,19 @@ public class ModulesManager
 				return m;
 		}
 		return null; 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Chapter> getChapters(Module m)
+	{
+		Query query = em.createQuery("Select c from Chapter c where c.module = ?1");
+		query.setParameter(1, m);
+		return query.getResultList();
+	}
+
+	public Chapter findChapterByPK(int cId) 
+	{
+		Chapter chapter = em.find(Chapter.class, cId);		
+		return chapter;
 	}
 }

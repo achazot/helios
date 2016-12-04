@@ -1,30 +1,42 @@
 <%@ page import="entities.Module" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
+<%@ page import="entities.Chapter" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ 
 <% Module module = (Module) session.getAttribute("module"); %>	
 
-<%java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy/MM/dd"); %>
+<!-- View Chapters -->
+<c:choose>
+	<c:when test="${not empty chapters}">
+			<h1>Chapitres du module ${module.title} </h1>
+			<ul>
+				<c:forEach items="${chapters}" var="chapter">
+				<li> ${chapter.title} <br>
+				${chapter.text}	<br>
+				<c:choose>
+					<c:when test="${chapter.getQcm() == false}">
+						Il n'y a pas de QCM pour l'instant
+						
+						<form method="post" action="TeacherController"> 
+							<input type="hidden" name="module" value="${module.id}">
+							<input type="hidden" name="chapter" value="${chapter.id}">
+							<button type="submit" name="teacherops" value="getQCMForm">Cr�er un QCM</button>
+						</form>
+					</c:when>	
+					<c:otherwise>
+						<form method="post" action="TeacherController"> 
+							<input type="hidden" name="module" value="${module.id}">
+							<button type="submit" name="teacherops" value="viewQCM">Voir le QCM</button>
+						</form>
+					</c:otherwise>
+				</c:choose>
+				</c:forEach>
+			</ul>
+	</c:when>
+</c:choose>
 
-<!-- Create QCM  -->
-<h1>Creer un QCM</h1>
 
-<form method="post" action="TeacherController">
 
-	Titre du module <br>
-		<input type="text" name="moduleName" value="${module.title}" disabled> <br>
-	Titre du chapitre <br>
-	    <select name="chapter">
-	  		<option value="1">Chapitre 1</option>
-	  		<option value="2">Chapitre 2</option>
-	  	</select> <br>
-	Titre du QCM <br>
-		<input type="text" name="title" value ="title"/> <br>
-	Total des points <br>
-		<input type="number" name="total" value ="20" min="1" max="40"/> <br>
-   	Date de création <br>
-  		<input type="date" name="creation" value="<%= df.format( new java.util.Date() )%>" disabled/><br>
-	Date d'expiration <br>
-		<input type="date" name="expiration"/><br>
-	<button type="submit" name="teacherops" value="createQCM">Créer</button>
 
-</form>
+
+
+

@@ -16,4 +16,5 @@ INSERT INTO "SUBSCRIPTION" VALUES(93, NULL, 93, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(94, NULL, 94, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(95, NULL, 95, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(96, NULL, 92, 'jazzy');
-
+INSERT INTO "CHAPTER" VALUES(100, false, 'La théorie des graphes c est très très bien', 'Chapitre 1 : introduction', 91);
+INSERT INTO "CHAPTER" VALUES(101, false, 'Le lemme de l etoile', 'Chapitre 2 : choses serieuses', 91);

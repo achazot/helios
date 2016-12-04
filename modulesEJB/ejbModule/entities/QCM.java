@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,12 +23,10 @@ public class QCM
 	private Date creation; 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date expiration; 
-	private boolean areAnswersShown; 
+	private boolean answersShown; 
+	@OneToOne 
+	private Chapter chapter; 
 	
-	
-/** TODO : add this when chapter class is done  + getter & setter **/	
-//	@OneToOne 
-//	private Chapter chapter; 
 	
 	@Column(name="id")
 	public int getId()
@@ -65,10 +64,16 @@ public class QCM
 		return expiration;
 	}
 	
-	@Column(name="areAnswersShown")
-	public boolean areAnswersShown()
+	@Column(name="answersShown")
+	public boolean getAnswersShown()
 	{
-		return areAnswersShown;
+		return answersShown;
+	}
+	
+	@Column(name="chapter")
+	public Chapter getChapter()
+	{
+		return chapter;
 	}
 
 	public void setId( int aid )
@@ -103,6 +108,11 @@ public class QCM
 	
 	public void setAnswersShown( boolean b )
 	{
-		areAnswersShown = b; 
+		answersShown = b; 
+	}
+	
+	public void setChapter( Chapter achapter )
+	{
+		chapter = achapter; 
 	}
 }
