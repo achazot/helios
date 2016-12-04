@@ -57,6 +57,7 @@ public class TeacherController extends HttpServlet
 	{
 		User user = (User) request.getSession().getAttribute("user");
 		List<Module> mList = modsManager.getModules( user );
+		
 		switch(request.getParameter("teacherops"))
     	{	
     	case "browseModules":	// display modules list
@@ -75,7 +76,6 @@ public class TeacherController extends HttpServlet
     		String title = request.getParameter("title");
     		String chapter = request.getParameter("chapter");
     		int total = Integer.parseInt( request.getParameter("total") ); 
-    		
     		qcmManager.createQCM( title, total, new Date("01/01/2017"), true);
     		request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
