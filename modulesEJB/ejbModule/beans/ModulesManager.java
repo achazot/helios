@@ -71,6 +71,11 @@ public class ModulesManager
 		
 	}
 	
+	public Module getModule(int id)
+	{
+		return (Module) em.find(Module.class, id);
+	}
+	
 	
 	/**
 	 ************** studentSubscribe **************
@@ -101,6 +106,18 @@ public class ModulesManager
 		return null; 
 	}
 	
+
+	
+	public Chapter findChapterByPK(List<Chapter> cList, int cId)
+	{
+		for(Chapter c : cList)
+		{
+			if( c.getId() == cId )
+				return c;
+		}
+		return null; 
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Chapter> getChapters(Module m)
 	{
@@ -108,10 +125,11 @@ public class ModulesManager
 		query.setParameter(1, m);
 		return query.getResultList();
 	}
-
-	public Chapter findChapterByPK(int cId) 
+	
+	
+	public Chapter getChapter(int id)
 	{
-		Chapter chapter = em.find(Chapter.class, cId);		
-		return chapter;
+		return (Chapter) em.find(Chapter.class, id);
 	}
+
 }

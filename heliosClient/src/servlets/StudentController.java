@@ -11,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.ModulesManager;
+import beans.QCMsManager;
+import entities.Chapter;
 import entities.Module;
+import entities.QCM;
 import entities.User;
 
 @WebServlet("/StudentController")
@@ -21,7 +24,9 @@ public class StudentController extends HttpServlet
 
 	@EJB
 	private ModulesManager modsManager;
-
+	@EJB
+	private QCMsManager qcmManager;
+	
 	public StudentController()
 	{
 		super();
@@ -41,25 +46,48 @@ public class StudentController extends HttpServlet
 	private void handleStudentOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		User user = (User) request.getSession().getAttribute("user");
-		List<Module> mList = modsManager.getModules( );
-		List<Module> mSubsList = modsManager.getModules( user );
+				
 		switch(request.getParameter("studentops"))
     	{	
     	case "browseModules":	// display modules list
-    		request.setAttribute("modules", mList); 
-			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    		List<Module> mList = modsManager.getModules( );
+    		request.setAttribute("modules", mList);
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
+    		
     	case "listSubscriptions":	// display subscription list
-    		request.setAttribute("subs", mSubsList); 
-			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    		List<Module> mSubsList = modsManager.getModules( user );
+    		request.setAttribute("subs", mSubsList);
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "subscribe":	// display subscription list
-    		Module module = modsManager.findModuleByPK(mList, Integer.parseInt(request.getParameter("module")));
-    		modsManager.studentSubscribe(user, module);
-    		request.removeAttribute("module");
-			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    		
+    	case "subscribe": // subscribe to a module
+    		modsManager.studentSubscribe(user, modsManager.getModule(Integer.parseInt(request.getParameter("subMod"))));
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break;
+    		
+    	case "openmodule": // open a module to view its chapters
+    		Module openMod = modsManager.getModule(Integer.parseInt(request.getParameter("openMod")));
+    		List<Chapter> cList = modsManager.getChapters( openMod );
+    		request.setAttribute("module", openMod); 
+    		request.setAttribute("chapters", cList);
+    		request.getSession().setAttribute("viewPage", "./includes/student_module.jsp");
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break;
+    		
+    	case "readchapter":
+    		request.setAttribute("module", modsManager.getModule(Integer.parseInt(request.getParameter("openMod"))));
+    		request.setAttribute("chapter", modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter"))));
+    		request.getSession().setAttribute("viewPage", "./includes/student_chapter.jsp");
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break;
+    		
+    	case "doqcm":
+    		request.setAttribute("module", modsManager.getModule(Integer.parseInt(request.getParameter("openMod"))));
+    		request.setAttribute("chapter", modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter"))));
+    		request.setAttribute("qcm", qcmManager.getQCMByChapter(
+    				modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")))));
+    		request.getSession().setAttribute("viewPage", "./includes/student_qcm.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		

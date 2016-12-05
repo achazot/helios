@@ -85,7 +85,8 @@ public class TeacherController extends HttpServlet
 			int cId; 
 			cId = Integer.parseInt( request.getParameter("chapter") );
 			if( chapter == null || chapter.getId() != cId )
-				chapter = modsManager.findChapterByPK( cId );
+					chapter = modsManager.getChapter( cId );
+
 		}
 		
 		// update current qcm

@@ -2,8 +2,6 @@
 <%@ page import="entities.Chapter" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  
-<% Module module = (Module) session.getAttribute("module"); %>	
-
 <!-- View Chapters -->
 <c:choose>
 	<c:when test="${not empty chapters}">
@@ -33,10 +31,3 @@
 			</ul>
 	</c:when>
 </c:choose>
-
-
-
-
-
-
-
