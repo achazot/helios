@@ -65,10 +65,12 @@ public class TeacherController extends HttpServlet
 		// current module & chapter 
 		int mId;
 		int cId;
-				
+		int qId; 
+		
 		Module module = null;
 		Chapter chapter = null; 
-				
+		QCM qcm = null; 
+		
 		// get module object
 		if( request.getParameter( "module" ) != null )
 		{
@@ -81,6 +83,13 @@ public class TeacherController extends HttpServlet
 		{
 			cId = Integer.parseInt( request.getParameter("chapter") );
 			chapter = modsManager.findChapterByPK( cId );
+		}
+		
+		// get qcm object 
+		if( request.getParameter( "qcm" ) != null )
+		{
+			qId = Integer.parseInt( request.getParameter("qcm") );
+			qcm = qcmManager.findQCMByPK( qId );
 		}
 		
 		switch(request.getParameter("teacherops"))
@@ -103,30 +112,42 @@ public class TeacherController extends HttpServlet
     	case "getQCMForm":		// get QCM creation form    		
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("chapter", chapter);
+    		request.getSession().setAttribute("isQCMCreated", "false");
     		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "createQCM":		// create new QCM
-    		String title = request.getParameter( "chapterTitle" );
-    		boolean b = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
-    		int total = Integer.parseInt( request.getParameter( "total" ) ); 
-    		Date creation = new Date();
-    		Date expiration = new Date( request.getParameter("expiration") );
-    		if( creation.after(expiration) )
-    		{
-				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
-    		}
-    		else
+    	case "createQCM":		// create & edit QCM
+    		if( request.getParameter( "isQCMCreated" ).equals( "false" ) )
     		{	
-    			qcmManager.createQCM( title, total, creation, expiration, b, chapter );
-    			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
+    			String title = "QCM " + chapter.getTitle();
+    			boolean b = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
+    			int total = 0; 
+    			Date creation = new Date();
+    			Date expiration = new Date( request.getParameter("expiration") );
+    			if( creation.after(expiration) )
+    				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
+	    		else
+	    		{	
+	    			qcm = qcmManager.createQCM( title, total, creation, expiration, b, chapter );
+	    			request.getSession().setAttribute("qcm", qcm);
+	    			request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
+	    		}
     		}
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "viewQCM":
-    		QCM qcm = qcmManager.getQCMByChapter( chapter );
-    		List<Question> qList = qcmManager.getQuestions( qcm ); 
+    	case "addQuestion":
+    		String text = request.getParameter("question");
+    		int points = Integer.parseInt( request.getParameter("points") );
+    		qcmManager.createQuestions(points, text, qcm);
+    		List<Question> qList = qcmManager.getQuestions( qcm );
     		request.getSession().setAttribute("questions", qList);
+    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+    		break;
+    	case "viewQCM": 	// view QCM questions 
+    		QCM m_qcm = qcmManager.getQCMByChapter( chapter );
+    		List<Question> m_qList = qcmManager.getQuestions( m_qcm ); 
+    		request.getSession().setAttribute("questions", m_qList);
 			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break; 
