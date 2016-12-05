@@ -27,7 +27,7 @@ public class QCMsManager
 	 * @param expiration
 	 * @param answersAreShown
 	 */
-	public void createQCM( String title, int total, Date creation,  Date expiration, boolean answersAreShown, Chapter chapter  )
+	public QCM createQCM( String title, int total, Date creation,  Date expiration, boolean answersAreShown, Chapter chapter  )
 	{
 		QCM qcm = new QCM();
 		
@@ -42,6 +42,7 @@ public class QCMsManager
 		chapter.setQcm( true );
 		em.merge( chapter );
 		em.persist( qcm ); 
+		return qcm;
 	}
 	
 	public void createQuestions( int points, String text, QCM qcm )
