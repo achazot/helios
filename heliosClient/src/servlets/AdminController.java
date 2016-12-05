@@ -63,25 +63,21 @@ public class AdminController extends HttpServlet
     	case "browseStudents":	// display students list
     		List<User> sList = usersManager.getUsers("student");
     		request.setAttribute("students", sList);
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
     	case "browseTeachers":	// display teachers list
     		List<User> tList = usersManager.getUsers("teacher");
     		request.setAttribute("teachers", tList);
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
     	case "delete":	// delete user 
     		String login = (String) request.getParameter("login");
     		usersManager.deleteUser(login);
     		request.removeAttribute("login");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
     	case "getForm":	// get account form
     		request.setAttribute("accountForm", "1");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;	
     		
     	case "submitForm":	// register new account 
@@ -102,7 +98,7 @@ public class AdminController extends HttpServlet
     		}
     		else
     		{
-    			// control inputs validity
+    			// control inputs 
     			String err = ""; 
 	    		err += ! tools.InputControl.checkOnlyAlphabetic(name) ? "Le champs prénom doit être composé uniquement de caractères alphabétiques <br>" : "";
 	    		err += ! tools.InputControl.checkOnlyAlphabetic(surname) ? "Le champs nom doit être composé uniquement de caractères alphabétiques <br>" : "";
@@ -110,13 +106,10 @@ public class AdminController extends HttpServlet
 	    		err += ! tools.InputControl.checkNoSQL(password) ? "Le champs mot de passe ne doit pas comporter de <a href=\"https://docs.oracle.com/database/121/SQLRF/ap_keywd001.htm#SQLRF55621\">mots réservés au langage SQL</a> <br>" :"";
 	    		err += ! tools.InputControl.checkMail(mail) ? "Le champs mail doit être de la forme <[a-zA-z-.]>@helios.fr" : ""; 
 	    		
-	    		// inputs threw error(s) 
-	    		if( ! err.isEmpty() )
-				{	  
+	    		if( ! err.isEmpty() )	  
     				request.setAttribute("errorForm", err);
-	    		}
 	    		
-	    		// account successfully created 
+	    		// account created 
 	    		else if( usersManager.createUser(name, surname, mail, group, log, password) )
     			{	
     				request.removeAttribute("errorForm");
@@ -128,10 +121,10 @@ public class AdminController extends HttpServlet
     			else
     				request.setAttribute("errorForm", "Cet identifiant est déja utilisé, veuillez en choisir un autre");
     		}
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;	
     	default:
     		break;
     	}		
+		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 }

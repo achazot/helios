@@ -1,10 +1,14 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -17,6 +21,8 @@ public class Question
 	private int points; 
 	@ManyToOne 
 	private QCM qcm;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="question")
+	private List<Answer> answers; 
 	
 	public int getId()
 	{
@@ -56,4 +62,13 @@ public class Question
 		qcm = aqcm; 
 	}
 	
+	public List<Answer> getAnswers()
+	{
+		return answers;
+	}
+	
+	public void addAnswer(Answer answer)
+	{
+	    answers.add(answer);
+	}
 }

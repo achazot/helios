@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.ModulesManager;
 import beans.QCMsManager;
-import beans.UsersManager;
+import entities.Answer;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
@@ -29,6 +29,15 @@ public class TeacherController extends HttpServlet
 	private ModulesManager modsManager;
 	@EJB 
 	private QCMsManager qcmManager; 	
+	
+	private boolean isInitialized = false; 
+	private List<Module> mList;
+	
+	private User user; 
+	private Module module;
+	private Chapter chapter;
+	private QCM qcm; 
+	private Question question; 
 	
 	public TeacherController()
 	{
@@ -58,102 +67,164 @@ public class TeacherController extends HttpServlet
 	@SuppressWarnings("deprecation")
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		// current user & module list 
-		User user = (User) request.getSession().getAttribute("user"); 
-		List<Module> mList = modsManager.getModules( user );
-		
-		// current module & chapter 
-		int mId;
-		int cId;
-		int qId; 
-		
-		Module module = null;
-		Chapter chapter = null; 
-		QCM qcm = null; 
-		
-		// get module object
+		if( ! isInitialized)
+			initialized( request );
+			
+		// update current module
 		if( request.getParameter( "module" ) != null )
 		{
-			mId  = Integer.parseInt( request.getParameter("module") );
-			module = modsManager.findModuleByPK(mList, mId);
+			int mId;
+			mId = Integer.parseInt( request.getParameter("module") );
+			if( module == null || module.getId() != mId )
+				module = modsManager.findModuleByPK(mList, mId);
 		}
 		
-		// get chapter object 
+		// update current chapter
 		if( request.getParameter( "chapter" ) != null )
 		{
+			int cId; 
 			cId = Integer.parseInt( request.getParameter("chapter") );
-			chapter = modsManager.findChapterByPK( cId );
+			if( chapter == null || chapter.getId() != cId )
+				chapter = modsManager.findChapterByPK( cId );
 		}
 		
-		// get qcm object 
+		// update current qcm
 		if( request.getParameter( "qcm" ) != null )
 		{
+			int qId; 
 			qId = Integer.parseInt( request.getParameter("qcm") );
 			qcm = qcmManager.findQCMByPK( qId );
 		}
 		
+		// update current question
+		if( request.getParameter( "questionID" ) != null )
+		{
+			int questId;
+			questId = Integer.parseInt( request.getParameter("questionID") );
+			if( question == null || question.getId() != questId || ! question.getQcm().equals(qcm) )	
+				question = qcmManager.findQuestionByPK( questId );
+		}
+		
 		switch(request.getParameter("teacherops"))
     	{	
-    	case "browseModules":	// display modules list
+			// display modules list
+    	case "browseModules":	
     		request.setAttribute("modules", mList); 
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "viewModule":		// display chapters list in selected module)
+    		
+    		// display chapters list
+    	case "viewModule":		 
     		List<Chapter> cList = modsManager.getChapters( module );
     		request.getSession().setAttribute("chapters", cList);
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "getChapterForm":	// get Chapter creation form TODO
+    		
+    		// browse QCM 
+    	case "viewQCM": 
+    		QCM m_qcm = qcmManager.getQCMByChapter( chapter );
+    		List<Question> m_qList = qcmManager.getQuestions( m_qcm ); 
+    		request.getSession().setAttribute("questionsv", m_qList);
+			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
+    		break; 
+    		
+    		// TODO get chapter form 
+    	case "getChapterForm":	
     			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
     		break;
-    	case "getQCMForm":		// get QCM creation form    		
+    	
+    		// get QCM form 	
+    	case "getQCMForm":		   		
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("chapter", chapter);
     		request.getSession().setAttribute("isQCMCreated", "false");
     		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
-    	case "createQCM":		// create & edit QCM
+		
+	    	// TODO post chapter
+			// TODO create chapter
+    	case "addChapter":	
+    			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
+    		break;	
+    		
+			// post QCM 
+			// create QCM 	
+    	case "addQCM":		
     		if( request.getParameter( "isQCMCreated" ).equals( "false" ) )
     		{	
     			String title = "QCM " + chapter.getTitle();
-    			boolean b = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
-    			int total = 0; 
+    			boolean showAnswers = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
     			Date creation = new Date();
     			Date expiration = new Date( request.getParameter("expiration") );
     			if( creation.after(expiration) )
     				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
 	    		else
 	    		{	
-	    			qcm = qcmManager.createQCM( title, total, creation, expiration, b, chapter );
-	    			request.getSession().setAttribute("qcm", qcm);
+	    			qcm = qcmManager.createQCM( title, creation, expiration, showAnswers, chapter );
+	    			request.setAttribute("qcm", qcm);
 	    			request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
 	    		}
     		}
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
+    		
+			// post question
+			// create question    		
     	case "addQuestion":
-    		String text = request.getParameter("question");
-    		int points = Integer.parseInt( request.getParameter("points") );
-    		qcmManager.createQuestions(points, text, qcm);
-    		List<Question> qList = qcmManager.getQuestions( qcm );
-    		request.getSession().setAttribute("questions", qList);
+
+    		String questionText = request.getParameter("question");
+    		if( questionText.isEmpty() )
+    		{
+				request.setAttribute("errorForm", "Veuillez renseigner une question svp.");
+    		}
+    		else 	
+    		{	
+    			int points = Integer.parseInt( request.getParameter("points") );
+	    		qcmManager.createQuestions( points, questionText, qcm );
+	    		List<Question> qList = qcmManager.getQuestions( qcm );
+	    		request.setAttribute("questions", qList);
+	    		request.getSession().setAttribute("qcm", qcm);
+    		}
     		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			break;
+			
+			// post answer
+			// create answer -> add it in question entity    	
+    	case "addAnswer":	 	
+    		String answerText = request.getParameter("answer");
+    		if( answerText.isEmpty() )
+    		{
+				request.setAttribute("errorForm", "Veuillez renseigner une réponse svp.");
+    		}
+    		else 	
+    		{	
+	    		boolean valid = ( request.getParameter( "valid" ).equals( "yes" ) );
+	    		Answer answer = qcmManager.createAnswer( answerText , valid, question );
+	    		qcmManager.setAnswerToQuestion( question, answer );
+	    		List<Question> upQList = qcmManager.getQuestions( qcm );
+	    		request.getSession().setAttribute("questions", upQList);
+	    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");    		}
     		break;
-    	case "viewQCM": 	// view QCM questions 
-    		QCM m_qcm = qcmManager.getQCMByChapter( chapter );
-    		List<Question> m_qList = qcmManager.getQuestions( m_qcm ); 
-    		request.getSession().setAttribute("questions", m_qList);
-			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
-    		request.getRequestDispatcher("home.jsp").forward(request, response);
-    		break; 
+    		
     	default:
     		break;
-    	}		
+    	}
+		request.getRequestDispatcher("home.jsp").forward(request, response);
+
+	}
+
+	/**
+	 * set current teacher and his modules in list 
+	 */
+	private void initialized( HttpServletRequest request ) 
+	{
+		user = (User) request.getSession().getAttribute("user"); 
+		mList = modsManager.getModules( user );
+		
+		module = null;
+		chapter = null;
+		qcm = null;
+		question = null;
 	}
 
 
