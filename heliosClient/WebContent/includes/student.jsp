@@ -1,5 +1,3 @@
-<%@ page import="entities.User" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <h2> hello student </h2>
 
@@ -16,7 +14,10 @@
 			<ul>
 				<c:forEach items="${subs}" var="sub">
 				<li> ${sub.title}
-				<!-- Operate on current entry -->		
+					<form method="post" action="StudentController"> 
+						<input type="hidden" name="openMod" value="${sub.id}">
+						<button type="submit" name="studentops" value="openmodule">Accéder au module</button>
+					</form>
 				</c:forEach>
 			</ul>
 	</c:when>
@@ -36,10 +37,10 @@
 				<c:forEach items="${modules}" var="module">
 				<li> ${module.title}
 					<form method="post" action="StudentController"> 
-						<input type="hidden" name="module" value="${module.id}">
+						<input type="hidden" name="subMod" value="${module.id}">
 						<button type="submit" name="studentops" value="subscribe">S'inscrire</button>
-					</form>				</c:forEach>
+					</form>				
+				</c:forEach>
 			</ul>
 	</c:when>
 </c:choose>
-

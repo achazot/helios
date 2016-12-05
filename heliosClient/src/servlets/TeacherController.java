@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.ModulesManager;
 import beans.QCMsManager;
-import beans.UsersManager;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
@@ -80,7 +79,7 @@ public class TeacherController extends HttpServlet
 		if( request.getParameter( "chapter" ) != null )
 		{
 			cId = Integer.parseInt( request.getParameter("chapter") );
-			chapter = modsManager.findChapterByPK( cId );
+			chapter = modsManager.getChapter( cId );
 		}
 		
 		switch(request.getParameter("teacherops"))
