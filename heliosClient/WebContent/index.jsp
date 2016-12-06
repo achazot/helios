@@ -20,7 +20,7 @@
 		        <button type="submit" name="userops" value="connect">Connexion</button>
 		    </form>
 		<p>
-			Tentatives de connexion <%=(int) session.getAttribute("trials")%>
+			Tentatives de connexion ${trials}
 		</p>				    
 	</body>
 </html>

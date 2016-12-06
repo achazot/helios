@@ -30,15 +30,6 @@ public class TeacherController extends HttpServlet
 	@EJB 
 	private QCMsManager qcmManager; 	
 	
-	private boolean isInitialized = false; 
-	private List<Module> mList;
-	
-	private User user; 
-	private Module module;
-	private Chapter chapter;
-	private QCM qcm; 
-	private Question question; 
-	
 	public TeacherController()
 	{
 		super();
@@ -55,7 +46,6 @@ public class TeacherController extends HttpServlet
 		doGet(request, response);
 	}
 
-
 	/**
 	 * @author lisa
 	 * Handles teachers actions : create and edit modules
@@ -66,17 +56,30 @@ public class TeacherController extends HttpServlet
 	
 	@SuppressWarnings("deprecation")
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		if( ! isInitialized)
-			initialized( request );
-			
+	{	
+		List<Module> mList 	= (List<Module>)request.getSession().getAttribute("mList"); 
+		User user 			= (User) 		request.getSession().getAttribute("user"); 
+		Module module 		= (Module) 		request.getSession().getAttribute("module"); 
+		Chapter chapter 	= (Chapter) 	request.getSession().getAttribute("chapter"); 
+		QCM qcm 			= (QCM) 		request.getSession().getAttribute("qcm"); 
+		Question question	= (Question) 	request.getSession().getAttribute("question"); 	
+		
+		if( mList == null && user != null )
+		{
+			mList = modsManager.getModules( user );
+			request.getSession().setAttribute("modules", mList);
+		}
+		
 		// update current module
 		if( request.getParameter( "module" ) != null )
 		{
 			int mId;
 			mId = Integer.parseInt( request.getParameter("module") );
 			if( module == null || module.getId() != mId )
+			{
 				module = modsManager.findModuleByPK(mList, mId);
+				request.getSession().setAttribute("module", module);
+			}
 		}
 		
 		// update current chapter
@@ -85,8 +88,10 @@ public class TeacherController extends HttpServlet
 			int cId; 
 			cId = Integer.parseInt( request.getParameter("chapter") );
 			if( chapter == null || chapter.getId() != cId )
-					chapter = modsManager.getChapter( cId );
-
+			{
+				chapter = modsManager.getChapter( cId );
+				request.getSession().setAttribute("chapter", chapter);
+			}
 		}
 		
 		// update current qcm
@@ -95,6 +100,7 @@ public class TeacherController extends HttpServlet
 			int qId; 
 			qId = Integer.parseInt( request.getParameter("qcm") );
 			qcm = qcmManager.findQCMByPK( qId );
+			request.getSession().setAttribute("qcm", qcm);
 		}
 		
 		// update current question
@@ -103,14 +109,17 @@ public class TeacherController extends HttpServlet
 			int questId;
 			questId = Integer.parseInt( request.getParameter("questionID") );
 			if( question == null || question.getId() != questId || ! question.getQcm().equals(qcm) )	
+			{
 				question = qcmManager.findQuestionByPK( questId );
+				request.getSession().setAttribute("question", question);
+			}
 		}
 		
 		switch(request.getParameter("teacherops"))
     	{	
 			// display modules list
     	case "browseModules":	
-    		request.setAttribute("modules", mList); 
+    		//request.getSession().setAttribute("modules", mList); 
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		break;
     		
@@ -218,23 +227,9 @@ public class TeacherController extends HttpServlet
 
 	}
 
-	/**
-	 * set current teacher and his modules in list 
-	 */
-	private void initialized( HttpServletRequest request ) 
-	{
-		user = (User) request.getSession().getAttribute("user"); 
-		mList = modsManager.getModules( user );
-		
-		module = null;
-		chapter = null;
-		qcm = null;
-		question = null;
-	}
-	
 	private void loadChapters( HttpServletRequest request )
 	{
-		List<Chapter> cList = modsManager.getChapters( module );
+		List<Chapter> cList = modsManager.getChapters( (Module) request.getSession().getAttribute("module") );
 		request.getSession().setAttribute("chapters", cList);
 	}
 }

@@ -40,8 +40,10 @@ public class GlobalController extends HttpServlet
 		if (request.getParameter("userops") != null )
 			handleUserOps(request, response);
 		
-		else
+		else if(request.getSession().getAttribute("user") == null )
 			request.getRequestDispatcher("index.jsp").forward(request, response);
+		else 
+			request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -83,7 +85,7 @@ public class GlobalController extends HttpServlet
     		}
     		break;
     	case "disconnect":
-			request.getSession().setAttribute("user", null);
+			request.getSession().invalidate();
 			request.getRequestDispatcher("index.jsp").forward(request, response);
     		break;
     	case "infos":
