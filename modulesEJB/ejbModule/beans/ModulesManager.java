@@ -132,4 +132,15 @@ public class ModulesManager
 		return (Chapter) em.find(Chapter.class, id);
 	}
 
+	public void createChapter(String chapTitle, String chapText, Module module) 
+	{
+		Chapter chapter = new Chapter();
+		chapter.setTitle(chapTitle);
+		chapter.setText(chapText);
+		chapter.setQcm(false);
+		chapter.setModule(module);
+		
+		em.persist(chapter);
+	}
+
 }

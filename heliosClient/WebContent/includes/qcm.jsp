@@ -3,9 +3,11 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
- 
+
 <% java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy/MM/dd"); %>
 
+
+ <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Create QCM  -->
 <h1>Créer un QCM</h1>
 
@@ -89,6 +91,12 @@
 			<button type="submit" name="teacherops" value="addQuestion">Valider cette question</button>
 		</form>
 		
+		<h1>Retour au module</h1>
+		<form method="post" action="TeacherController">
+			<input type="hidden" name="module" value="${module.id}">	
+			<button type="submit" name="teacherops" value="viewModule">Terminer</button>
+		</form>
+				
 	</c:when>
 	
 	<c:otherwise>		

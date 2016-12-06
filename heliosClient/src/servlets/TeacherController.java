@@ -116,8 +116,7 @@ public class TeacherController extends HttpServlet
     		
     		// display chapters list
     	case "viewModule":		 
-    		List<Chapter> cList = modsManager.getChapters( module );
-    		request.getSession().setAttribute("chapters", cList);
+    		loadChapters( request );
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
     		break;
@@ -130,7 +129,7 @@ public class TeacherController extends HttpServlet
 			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
     		break; 
     		
-    		// TODO get chapter form 
+    		// get chapter form 
     	case "getChapterForm":	
     			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
     		break;
@@ -143,18 +142,22 @@ public class TeacherController extends HttpServlet
     		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
     		break;
 		
-	    	// TODO post chapter
-			// TODO create chapter
+	    	// post chapter
+			// create chapter
     	case "addChapter":	
-    			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
+    		String chapText = request.getParameter( "text" );
+    		String chapTitle = request.getParameter( "title" );
+    		modsManager.createChapter(chapTitle, chapText, module);
+    		loadChapters( request );
+    		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
     		break;	
-    		
+
 			// post QCM 
 			// create QCM 	
     	case "addQCM":		
     		if( request.getParameter( "isQCMCreated" ).equals( "false" ) )
     		{	
-    			String title = "QCM " + chapter.getTitle();
+    			String qcmTitle = "QCM " + chapter.getTitle();
     			boolean showAnswers = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
     			Date creation = new Date();
     			Date expiration = new Date( request.getParameter("expiration") );
@@ -162,7 +165,7 @@ public class TeacherController extends HttpServlet
     				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
 	    		else
 	    		{	
-	    			qcm = qcmManager.createQCM( title, creation, expiration, showAnswers, chapter );
+	    			qcm = qcmManager.createQCM( qcmTitle, creation, expiration, showAnswers, chapter );
 	    			request.setAttribute("qcm", qcm);
 	    			request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
 	    		}
@@ -204,7 +207,8 @@ public class TeacherController extends HttpServlet
 	    		qcmManager.setAnswerToQuestion( question, answer );
 	    		List<Question> upQList = qcmManager.getQuestions( qcm );
 	    		request.getSession().setAttribute("questions", upQList);
-	    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");    		}
+	    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");    		
+	    	}
     		break;
     		
     	default:
@@ -227,6 +231,10 @@ public class TeacherController extends HttpServlet
 		qcm = null;
 		question = null;
 	}
-
-
+	
+	private void loadChapters( HttpServletRequest request )
+	{
+		List<Chapter> cList = modsManager.getChapters( module );
+		request.getSession().setAttribute("chapters", cList);
+	}
 }

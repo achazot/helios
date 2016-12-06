@@ -29,5 +29,22 @@
 				</c:choose>
 				</c:forEach>
 			</ul>
+		<h1>Ajouter un chapitre</h1>
 	</c:when>
+	
+	<c:otherwise>
+		<h1>Ce module est un peu vide</h1>
+	</c:otherwise>
 </c:choose>
+
+<form method="post" action="TeacherController">
+	<input type="hidden" name="module" value="${module.id}"> 
+	<button type="submit" name="teacherops" value="getChapterForm">Créer un chapitre</button>
+</form>
+
+<h1>Retour à la liste des modules</h1>
+<form method="post" action="TeacherController">
+	<button type="submit" name="teacherops" value="browseModules">Terminer</button>
+</form>
+
+

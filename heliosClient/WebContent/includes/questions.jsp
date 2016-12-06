@@ -29,3 +29,9 @@
 		</ul>
 	</c:when>
 </c:choose>
+
+<h1>Retour au module</h1>
+		<form method="post" action="TeacherController">
+			<input type="hidden" name="module" value="${module.id}">	
+			<button type="submit" name="teacherops" value="viewModule">Terminer</button>
+		</form>
