@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ import entities.Answer;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
-import entities.QCMInstance;
 import entities.Question;
+import entities.Subscription;
 import entities.User;
 
 @WebServlet("/StudentController")
@@ -71,10 +72,7 @@ public class StudentController extends HttpServlet
     		break;
     		
     	case "openmodule": // open a module to view its chapters
-    		Module openMod = modsManager.getModule(Integer.parseInt(request.getParameter("openMod")));
-    		List<Chapter> cList = modsManager.getChapters( openMod );
-    		request.setAttribute("module", openMod); 
-    		request.setAttribute("chapters", cList);
+    		openModule(request, response, user);
     		request.getSession().setAttribute("viewPage", "./includes/student_module.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
@@ -94,11 +92,6 @@ public class StudentController extends HttpServlet
     		request.setAttribute("qcm", qcm);
     		List<Question> qList = qcmManager.getQuestions( qcm ); 
     		request.setAttribute("qList", qList);
-
-    		//TODO:Display old qcm
-    		//QCMInstance qcmInst = qcmManager.getQCMInstance(qcm, user);
-    		//request.setAttribute("qcmInst", qcmInst);
-    		
     		request.getSession().setAttribute("viewPage", "./includes/student_qcm.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
@@ -110,7 +103,7 @@ public class StudentController extends HttpServlet
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
-    	default:
+    	default: // TODO: redirect on home
     		break;
     	}		
 	}
@@ -118,7 +111,7 @@ public class StudentController extends HttpServlet
 	private void validateQCM (HttpServletRequest request, HttpServletResponse response, User user) throws IOException
 	{
 		
-		Chapter openChapter = modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")));
+		Chapter openChapter = modsManager.getChapter(Integer.parseInt(request.getParameter("chapterId")));
 		Module module = modsManager.getModule(Integer.parseInt(request.getParameter("moduleId")));
 		QCM qcm = qcmManager.findQCMByPK(Integer.parseInt(request.getParameter("qcmId")));
 		request.setAttribute("chapter", openChapter);
@@ -173,10 +166,21 @@ public class StudentController extends HttpServlet
 		request.setAttribute("qcmNote", qcm.getMinimum());
 		request.setAttribute("showRightAnswers", qcm.getAnswersShown());
 		
-		// TODO: push valid answers if needed
-		
+		List<Question> qList = qcmManager.getQuestions( qcm ); 
+		request.setAttribute("qList", qList);				
 	}
 
+	private void openModule(HttpServletRequest request, HttpServletResponse response, User user) throws IOException
+	{
+		Module module = modsManager.getModule(Integer.parseInt(request.getParameter("openMod")));
+		List<Chapter> cList = new ArrayList<Chapter>();
+		request.setAttribute("module", module); 
+		Subscription sub = (Subscription) modsManager.getSubscriptionByStudentAndModule(user, module);
+		for (int i = 0; i <= sub.getProgress(); i++)
+			cList.add(modsManager.getChapters( module ).get(i));
+		
+		request.setAttribute("chapters", cList);		
+	}
 }
 
 

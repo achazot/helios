@@ -163,7 +163,7 @@ public class ModulesManager
 
 	public Subscription getSubscriptionByStudentAndModule ( User student, Module module )
 	{
-		Query query = em.createQuery("Select s from Chapter s where s.module = ?1 and s.student = ?2");
+		Query query = em.createQuery("Select s from Subscription s where s.module = ?1 and s.student = ?2");
 		query.setParameter(1, module);
 		query.setParameter(2, student);
 		return query.getResultList().isEmpty() ? null : (Subscription) query.getSingleResult();
