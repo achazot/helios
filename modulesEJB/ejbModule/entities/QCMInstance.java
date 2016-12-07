@@ -27,6 +27,9 @@ public class QCMInstance
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
+	@ManyToOne
+	private Subscription subscription;
+	
 	@Column(name="id")
 	public int getId()
 	{
@@ -95,6 +98,17 @@ public class QCMInstance
 	public void setDate(Date date)
 	{
 		this.date = date;
+	}
+	
+	@Column(name="subscription")
+	public Subscription getSubscription() 
+	{
+		return subscription;
+	}
+	
+	public void setSubscription(Subscription subs) 
+	{
+		this.subscription = subs;
 	}
 	
 	

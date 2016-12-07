@@ -146,8 +146,12 @@ public class QCMsManager
 			inst.setOrigin(origin);
 			inst.setStudent(student);
 			inst.setTrials(1);
+			inst.setSubscription(subscription);
 			
+			em.merge(subscription);
 			em.persist(inst);
+			
+			subscription.addInstance(inst);
 		}
 		else // update instance
 		{

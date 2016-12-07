@@ -15,7 +15,7 @@
 		
 		<h2>Authentifie ta mère</h2>
 			<form method="post" action="GlobalController">
-			 	<input type="text" name="login" value ="clemou"/>
+			 	<input type="text" name="login" value ="bertho"/>
 				<input type="password" name="password" value ="azerty"/>
 		        <button type="submit" name="userops" value="connect">Connexion</button>
 		    </form>

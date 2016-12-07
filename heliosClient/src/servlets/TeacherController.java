@@ -250,6 +250,6 @@ public class TeacherController extends HttpServlet
 	{
 		List<Subscription> sList = modsManager
 				.getSubscriptionsByModule( (Module) request.getSession().getAttribute( "module" ) );
-		request.getSession().setAttribute("subscriptions", sList);
+		request.getSession().setAttribute( "subscriptions", sList );
 	}
 }
