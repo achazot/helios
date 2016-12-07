@@ -43,5 +43,8 @@
     <button type="submit" name ="studentops" value="doqcm" > Essayer de nouveau </button>
 </form>
 </c:if> 
-
+<form method="post">
+	<input type="hidden" name="openMod" value="${module.id}" required/>
+    <button type="submit" name ="studentops" value="openmodule" > Retourner aux chapitres </button>
+</form>
 		

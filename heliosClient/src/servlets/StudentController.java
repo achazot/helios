@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,13 +137,13 @@ public class StudentController extends HttpServlet
 			Question question = qcmManager.findQuestionByPK(qId);
 			if (question == null) continue;
 			boolean qGood = true;
-
+			boolean hasAnswered = false;
 			for (String p : parameters.get(s))
 			{
 				int ansId; 
 				try 
 				{
-					ansId = Integer.parseInt(request.getParameter(p));
+					ansId = Integer.parseInt(p);
 				}
 				catch (NumberFormatException e)
 				{
@@ -150,10 +151,13 @@ public class StudentController extends HttpServlet
 				}
 				
 				Answer answer = qcmManager.getAnswer(ansId);
-				if ( answer != null &&  answer.getValid() == false) qGood = false;
+				if ( answer != null ) hasAnswered = true;
+				if ( answer.getValid() == false) qGood = false;
 			}
+			if (!hasAnswered) qGood = false;
 			
 			if (qGood) total += question.getPoints();
+
 		}
 		
 		boolean done = (total >= qcm.getMinimum());
@@ -163,7 +167,7 @@ public class StudentController extends HttpServlet
 		request.setAttribute("qcmSuccess", done);
 		request.setAttribute("qcmUserNote", total);
 		request.setAttribute("qcmMinimum", qcm.getMinimum());
-		request.setAttribute("qcmNote", qcm.getMinimum());
+		request.setAttribute("qcmNote", qcm.getTotal());
 		request.setAttribute("showRightAnswers", qcm.getAnswersShown());
 		
 		List<Question> qList = qcmManager.getQuestions( qcm ); 
@@ -173,13 +177,20 @@ public class StudentController extends HttpServlet
 	private void openModule(HttpServletRequest request, HttpServletResponse response, User user) throws IOException
 	{
 		Module module = modsManager.getModule(Integer.parseInt(request.getParameter("openMod")));
-		List<Chapter> cList = new ArrayList<Chapter>();
+		List<Chapter> cList = modsManager.getChapters( module );
 		request.setAttribute("module", module); 
 		Subscription sub = (Subscription) modsManager.getSubscriptionByStudentAndModule(user, module);
-		for (int i = 0; i <= sub.getProgress(); i++)
-			cList.add(modsManager.getChapters( module ).get(i));
+		Map<Chapter, Boolean> accessList = new HashMap<Chapter, Boolean>();
+		int i = 0;
+		for (Chapter c : cList)
+		{
+			accessList.put(c, (i <= sub.getProgress()));
+			i++;
+		}
 		
-		request.setAttribute("chapters", cList);		
+		request.setAttribute("chapters", cList);
+		request.setAttribute("accessList", accessList);		
+
 	}
 }
 
