@@ -110,6 +110,12 @@ public class QCMsManager
 		return query.getResultList();	
 	}
 
+	public Answer getAnswer( int ansId )
+	{
+		Answer answer = em.find(Answer.class, ansId);		
+		return answer;
+	}
+	
 	public void setAnswerToQuestion(Question question, Answer answer) 
 	{
 		question.addAnswer(answer);
@@ -121,7 +127,39 @@ public class QCMsManager
 		query.setParameter(1, origin);
 		query.setParameter(2, student);
 
-		return query.getResultList().isEmpty() ? null : (QCMInstance) query.getResultList().get(0) ;
+		return query.getResultList().isEmpty() ? null : (QCMInstance) query.getSingleResult() ;
 	}
+
+	public void updateQCMInstance( QCM origin, User student, boolean done, int note) 
+	{
+		Query query = em.createQuery("Select q from QCMInstance q where q.origin = ?1 and q.student = ?2");
+		query.setParameter(1, origin);
+		query.setParameter(2, student);
+
+		if (query.getResultList().isEmpty()) // create instance
+		{
+			QCMInstance inst = new QCMInstance();
+			inst.setDate(new Date());
+			inst.setDone(done);
+			inst.setNote(note);
+			inst.setOrigin(origin);
+			inst.setStudent(student);
+			inst.setTrials(1);
+			
+			em.persist(inst);
+		}
+		else // update instance
+		{
+			QCMInstance inst = (QCMInstance) query.getSingleResult();
+			inst.setDate(new Date());
+			inst.setDone(done);
+			inst.setNote(note);
+			inst.setTrials(inst.getTrials()+1);
+			
+			em.merge(inst);
+		}
+		
+	}
+
 	
 }

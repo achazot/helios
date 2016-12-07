@@ -144,6 +144,15 @@ public class ModulesManager
 		em.persist(chapter);
 	}
 	
+	public void incrementSubscription (User user, Module module)
+	{
+		Subscription sub = getSubscriptionByStudentAndModule(user, module);
+		if (sub == null) return;
+		sub.setProgress(sub.getProgress()+1);
+		
+		em.merge(sub);
+	}
+		
 	@SuppressWarnings("unchecked")
 	public List<Subscription> getSubscriptionsByModule( Module m )
 	{
@@ -152,4 +161,11 @@ public class ModulesManager
 		return query.getResultList();
 	}
 
+	public Subscription getSubscriptionByStudentAndModule ( User student, Module module )
+	{
+		Query query = em.createQuery("Select s from Chapter s where s.module = ?1 and s.student = ?2");
+		query.setParameter(1, module);
+		query.setParameter(2, student);
+		return query.getResultList().isEmpty() ? null : (Subscription) query.getSingleResult();
+	}
 }
