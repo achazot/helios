@@ -10,7 +10,7 @@
 		<br>Nombre de chapitres terminés  	${subscription.progress}
 		
 		<c:if test="${subscription.progress != '0'}">
-			<c:forEach items="${subscription.qcmInstances}" var="instance">
+			<c:forEach items="${subscription.getInstances()}" var="instance">
 				<br>${instance.note}
 			</c:forEach>
 			<br> 

@@ -148,7 +148,6 @@ public class QCMsManager
 			inst.setTrials(1);
 			inst.setSubscription(subscription);
 			
-			em.merge(subscription);
 			em.persist(inst);
 			
 			subscription.addInstance(inst);

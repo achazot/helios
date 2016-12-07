@@ -36,8 +36,6 @@ INSERT INTO "ANSWER" VALUES (110, 'gigantesque', TRUE, 40) ;
 INSERT INTO "ANSWER" VALUES (111, 'petit chose', TRUE, 40) ; 
 INSERT INTO "ANSWER" VALUES (112, 'réponse fausse', FALSE, 40) ; 
 
-INSERT INTO "QCMINSTANCE" VALUES (520, '2015-05-05', true, 20, 5,  200, 'thomas', 191);
-
 INSERT INTO "QUESTION" VALUES (21, 10, 'Quelle est la taille du zizi?', 201) ; 
 INSERT INTO "QUESTION" VALUES (31, 5, 'Quelle est la taille du fesse?', 201) ;
 INSERT INTO "QUESTION" VALUES (41, 5, 'Quelle est la taille du amour?', 201) ; 

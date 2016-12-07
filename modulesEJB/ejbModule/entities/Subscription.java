@@ -27,7 +27,7 @@ public class Subscription
 	private Date date;
 	private int progress; 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="subscription")
-	private List<QCMInstance> qcmInstances; 
+	private List<QCMInstance> qcminst; 
 	
 	@Column(name="id")
 	public int getId()
@@ -84,12 +84,12 @@ public class Subscription
 	
 	public List<QCMInstance> getInstances()
 	{
-		return qcmInstances;
+		return qcminst;
 	}
 	
 	public void addInstance(QCMInstance qcmInstance)
 	{
-	    qcmInstances.add(qcmInstance);
+		qcminst.add(qcmInstance);
 	}
 	
 }
