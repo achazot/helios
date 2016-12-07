@@ -15,6 +15,7 @@ import entities.Chapter;
 import entities.QCM;
 import entities.QCMInstance;
 import entities.Question;
+import entities.Subscription;
 import entities.User;
 
 @Stateless
@@ -130,7 +131,7 @@ public class QCMsManager
 		return query.getResultList().isEmpty() ? null : (QCMInstance) query.getSingleResult() ;
 	}
 
-	public void updateQCMInstance( QCM origin, User student, boolean done, int note) 
+	public void updateQCMInstance( QCM origin, User student, boolean done, int note, Subscription subscription) 
 	{
 		Query query = em.createQuery("Select q from QCMInstance q where q.origin = ?1 and q.student = ?2");
 		query.setParameter(1, origin);
