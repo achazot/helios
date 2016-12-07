@@ -19,9 +19,10 @@ INSERT INTO "SUBSCRIPTION" VALUES(196, '1970-01-01', 0, 91, 'jazzy');
 INSERT INTO "CHAPTER" VALUES(100, false, 'La théorie des graphes c est très très bien', 'Chapitre 1 : Introduction', 91);
 INSERT INTO "CHAPTER" VALUES(101, true, 'Le lemme de l etoile', 'Chapitre 2 : Choses serieuses', 91);
 INSERT INTO "QCM" VALUES(200, TRUE, '1970-01-01', '2020-01-01', 20, null, 20, 101);
+INSERT INTO "QCM" VALUES(201, TRUE, '1970-01-01', '2020-01-01', 20, null, 20, 100);
 INSERT INTO "QUESTION" VALUES (20, 10, 'Quelle est la taille du zizi?', 200) ; 
-INSERT INTO "QUESTION" VALUES (30, 2, 'Quelle est la taille du fesse?', 200) ;
-INSERT INTO "QUESTION" VALUES (40, 2, 'Quelle est la taille du amour?', 200) ; 
+INSERT INTO "QUESTION" VALUES (30, 5, 'Quelle est la taille du fesse?', 200) ;
+INSERT INTO "QUESTION" VALUES (40, 5, 'Quelle est la taille du amour?', 200) ; 
 INSERT INTO "ANSWER" VALUES (100, '10cm', FALSE, 20) ; 
 INSERT INTO "ANSWER" VALUES (101, '14cm', FALSE, 20) ; 
 INSERT INTO "ANSWER" VALUES (102, '70cm', FALSE, 20) ; 
@@ -34,4 +35,22 @@ INSERT INTO "ANSWER" VALUES (109, 'nul', FALSE, 40) ;
 INSERT INTO "ANSWER" VALUES (110, 'gigantesque', TRUE, 40) ; 
 INSERT INTO "ANSWER" VALUES (111, 'petit chose', TRUE, 40) ; 
 INSERT INTO "ANSWER" VALUES (112, 'réponse fausse', FALSE, 40) ; 
+
 INSERT INTO "QCMINSTANCE" VALUES (520, '2015-05-05', true, 20, 5,  200, 'thomas', 191);
+
+INSERT INTO "QUESTION" VALUES (21, 10, 'Quelle est la taille du zizi?', 201) ; 
+INSERT INTO "QUESTION" VALUES (31, 5, 'Quelle est la taille du fesse?', 201) ;
+INSERT INTO "QUESTION" VALUES (41, 5, 'Quelle est la taille du amour?', 201) ; 
+INSERT INTO "ANSWER" VALUES (100, '10cm', FALSE, 21) ; 
+INSERT INTO "ANSWER" VALUES (101, '14cm', FALSE, 21) ; 
+INSERT INTO "ANSWER" VALUES (102, '70cm', FALSE, 21) ; 
+INSERT INTO "ANSWER" VALUES (103, 'normal', TRUE, 21) ; 
+INSERT INTO "ANSWER" VALUES (104, 'moyen', FALSE, 31) ; 
+INSERT INTO "ANSWER" VALUES (105, 'tres petit', TRUE, 31) ; 
+INSERT INTO "ANSWER" VALUES (106, 'petit', TRUE, 31) ; 
+INSERT INTO "ANSWER" VALUES (108, 'gros', FALSE, 31) ; 
+INSERT INTO "ANSWER" VALUES (109, 'nul', FALSE, 41) ; 
+INSERT INTO "ANSWER" VALUES (110, 'gigantesque', TRUE, 41) ; 
+INSERT INTO "ANSWER" VALUES (111, 'petit chose', TRUE, 41) ; 
+INSERT INTO "ANSWER" VALUES (112, 'réponse fausse', FALSE, 41) ; 
+
