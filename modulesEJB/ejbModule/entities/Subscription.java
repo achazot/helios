@@ -22,6 +22,7 @@ public class Subscription
 	private Module module;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+	private int progress; 
 	
 	@Column(name="id")
 	public int getId()
@@ -65,6 +66,15 @@ public class Subscription
 	public void setDate(Date date)
 	{
 		this.date = date;
+	}
+	
+	@Column(name="progress")
+	public int getProgress() {
+		return progress;
+	}
+
+	public void setProgress(int progress) {
+		this.progress = progress;
 	}
 	
 	

@@ -91,6 +91,7 @@ public class ModulesManager
 			sub.setDate(new Date());
 			sub.setModule(module);
 			sub.setStudent(student);
+			sub.setProgress(0);
 			
 			em.persist(sub);
 		}
