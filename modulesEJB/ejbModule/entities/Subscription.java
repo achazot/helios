@@ -1,12 +1,15 @@
 package entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,6 +26,8 @@ public class Subscription
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	private int progress; 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="subscription")
+	private List<QCMInstance> qcmInstances; 
 	
 	@Column(name="id")
 	public int getId()
@@ -77,6 +82,14 @@ public class Subscription
 		this.progress = progress;
 	}
 	
+	public List<QCMInstance> getInstances()
+	{
+		return qcmInstances;
+	}
 	
+	public void addInstance(QCMInstance qcmInstance)
+	{
+	    qcmInstances.add(qcmInstance);
+	}
 	
 }
