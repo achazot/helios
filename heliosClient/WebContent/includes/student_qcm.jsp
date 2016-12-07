@@ -17,7 +17,8 @@
 		
 		<br/>
 		<input type="hidden" name="qcmId" value="${qcm.id}" required/>
-		<input type="hidden" name="moduleId" value="${module.id}" required/>				
+		<input type="hidden" name="moduleId" value="${module.id}" required/>
+		<input type="hidden" name="chapterId" value="${chapter.id}" required/>								
 		<button type="submit" name ="studentops" value="validateQCM" >Valider les réponses</button>
 
 	</fieldset>

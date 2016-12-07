@@ -91,6 +91,7 @@ public class ModulesManager
 			sub.setDate(new Date());
 			sub.setModule(module);
 			sub.setStudent(student);
+			sub.setProgress(0);
 			
 			em.persist(sub);
 		}
@@ -147,7 +148,17 @@ public class ModulesManager
 	{
 		Subscription sub = getSubscriptionByStudentAndModule(user, module);
 		if (sub == null) return;
+		sub.setProgress(sub.getProgress()+1);
 		
+		em.merge(sub);
+	}
+		
+	@SuppressWarnings("unchecked")
+	public List<Subscription> getSubscriptionsByModule( Module m )
+	{
+		Query query = em.createQuery("Select s from Subscription s where s.module = ?1");
+		query.setParameter(1, m);
+		return query.getResultList();
 	}
 
 	public Subscription getSubscriptionByStudentAndModule ( User student, Module module )

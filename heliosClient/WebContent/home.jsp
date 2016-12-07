@@ -37,9 +37,7 @@
 			<form method="post" action="GlobalController">
 		        <button type="submit" name="userops" value="disconnect">Déconnexion</button>
 		    </form>
-		</header>
 		
-		<aside> 
 			<% User user = (User) session.getAttribute("user"); %>	
 			
 			<h2>Voir les informations vous concernant</h2>
@@ -59,7 +57,7 @@
 					<li> Groupe : <%=user.getGrp()%>
 				</ul>	
 			</c:if>	
-		<aside>
+		</header>
 		
     	<% String viewpage =(String) session.getAttribute("viewPage"); %>
     	

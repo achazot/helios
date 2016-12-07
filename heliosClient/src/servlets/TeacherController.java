@@ -18,6 +18,7 @@ import entities.Chapter;
 import entities.Module;
 import entities.QCM;
 import entities.Question;
+import entities.Subscription;
 import entities.User;
 
 @WebServlet("/TeacherController")
@@ -54,10 +55,9 @@ public class TeacherController extends HttpServlet
 	 * 
 	 */
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{			
-		@SuppressWarnings("unchecked")
 		List<Module> mList 	= (List<Module>)request.getSession().getAttribute("mList"); 
 		User user 			= (User) 		request.getSession().getAttribute("user"); 
 		Module module 		= (Module) 		request.getSession().getAttribute("module"); 
@@ -120,28 +120,39 @@ public class TeacherController extends HttpServlet
     	{	
 			// display modules list
     	case "browseModules":	
-    		//request.getSession().setAttribute("modules", mList); 
 			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
     		break;
     		
-    		// display chapters list
+    		// display module 
     	case "viewModule":		 
     		loadChapters( request );
+    		loadSubscriptions( request );
     		request.getSession().setAttribute("module", module);
-    		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_module.jsp");
+    		break;
+    	
+    		// display chapter text
+    	case "viewChapter":
+    		request.getSession().setAttribute("chapter", chapter);
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_chapter_view.jsp");
     		break;
     		
-    		// browse QCM 
+    		// display QCM 
     	case "viewQCM": 
     		QCM m_qcm = qcmManager.getQCMByChapter( chapter );
     		List<Question> m_qList = qcmManager.getQuestions( m_qcm ); 
     		request.getSession().setAttribute("questionsv", m_qList);
-			request.getSession().setAttribute("viewPage", "./includes/questions.jsp");
+			request.getSession().setAttribute("viewPage", "./includes/teacher_questions.jsp");
     		break; 
+    		
+    		// display subscriptions and statisctics
+    	case "viewSubscriptions":
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_subscriptions.jsp");
+    		break;
     		
     		// get chapter form 
     	case "getChapterForm":	
-    			request.getSession().setAttribute("viewPage", "./includes/chapter.jsp");
+    			request.getSession().setAttribute("viewPage", "./includes/teacher_chapter.jsp");
     		break;
     	
     		// get QCM form 	
@@ -149,7 +160,7 @@ public class TeacherController extends HttpServlet
     		request.getSession().setAttribute("module", module);
     		request.getSession().setAttribute("chapter", chapter);
     		request.getSession().setAttribute("isQCMCreated", "false");
-    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_qcm.jsp");
     		break;
 		
 	    	// post chapter
@@ -159,7 +170,7 @@ public class TeacherController extends HttpServlet
     		String chapTitle = request.getParameter( "title" );
     		modsManager.createChapter(chapTitle, chapText, module);
     		loadChapters( request );
-    		request.getSession().setAttribute("viewPage", "./includes/module.jsp");
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_module.jsp");
     		break;	
 
 			// post QCM 
@@ -171,13 +182,14 @@ public class TeacherController extends HttpServlet
     			boolean showAnswers = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
     			Date creation = new Date();
     			Date expiration = new Date( request.getParameter("expiration") );
+    			System.out.println(">>>>>>>>>>>< " + expiration );
     			if( creation.after(expiration) )
     				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
 	    		else
 	    		{	
 	    			qcm = qcmManager.createQCM( qcmTitle, creation, expiration, showAnswers, chapter );
 	    			request.setAttribute("qcm", qcm);
-	    			request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
+	    			request.getSession().setAttribute("viewPage", "./includes/teacher_qcm.jsp");
 	    		}
     		}
     		break;
@@ -199,7 +211,7 @@ public class TeacherController extends HttpServlet
 	    		request.setAttribute("questions", qList);
 	    		request.getSession().setAttribute("qcm", qcm);
     		}
-    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");
+    		request.getSession().setAttribute("viewPage", "./includes/teacher_qcm.jsp");
 			break;
 			
 			// post answer
@@ -217,7 +229,7 @@ public class TeacherController extends HttpServlet
 	    		qcmManager.setAnswerToQuestion( question, answer );
 	    		List<Question> upQList = qcmManager.getQuestions( qcm );
 	    		request.getSession().setAttribute("questions", upQList);
-	    		request.getSession().setAttribute("viewPage", "./includes/qcm.jsp");    		
+	    		request.getSession().setAttribute("viewPage", "./includes/teacher_qcm.jsp");    		
 	    	}
     		break;
     		
@@ -230,7 +242,14 @@ public class TeacherController extends HttpServlet
 
 	private void loadChapters( HttpServletRequest request )
 	{
-		List<Chapter> cList = modsManager.getChapters( (Module) request.getSession().getAttribute("module") );
+		List<Chapter> cList = modsManager.getChapters( (Module) request.getSession().getAttribute( "module" ) );
 		request.getSession().setAttribute("chapters", cList);
+	}
+	
+	private void loadSubscriptions( HttpServletRequest request )
+	{
+		List<Subscription> sList = modsManager
+				.getSubscriptionsByModule( (Module) request.getSession().getAttribute( "module" ) );
+		request.getSession().setAttribute("subscriptions", sList);
 	}
 }

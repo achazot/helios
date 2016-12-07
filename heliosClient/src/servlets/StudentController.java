@@ -106,10 +106,8 @@ public class StudentController extends HttpServlet
     	case "validateQCM":
     		validateQCM(request, response, user);
     		
-    		/*
-    		request.getSession().setAttribute("viewPage", "./includes/student_qcm.jsp");
+    		request.getSession().setAttribute("viewPage", "./includes/student_qcm_result.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
-    		*/
     		break;
     		
     	default:
@@ -119,13 +117,17 @@ public class StudentController extends HttpServlet
 
 	private void validateQCM (HttpServletRequest request, HttpServletResponse response, User user) throws IOException
 	{
+		
+		Chapter openChapter = modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")));
 		Module module = modsManager.getModule(Integer.parseInt(request.getParameter("moduleId")));
 		QCM qcm = qcmManager.findQCMByPK(Integer.parseInt(request.getParameter("qcmId")));
+		request.setAttribute("chapter", openChapter);
+		request.setAttribute("module", module);
+		request.setAttribute("qcm", qcm);
 		int total = 0;
 		
 		Map<String,String[]> parameters = request.getParameterMap();
-		
-		response.getWriter().append("\nParsing: \n");
+
 		for (String s : parameters.keySet())
 		{
 			int qId; 
@@ -162,10 +164,15 @@ public class StudentController extends HttpServlet
 		}
 		
 		boolean done = (total >= qcm.getMinimum());
-		
 		qcmManager.updateQCMInstance(qcm, user, done, total);
-		
 		if (done) modsManager.incrementSubscription(user, module);
+		
+		request.setAttribute("qcmSuccess", done);
+		request.setAttribute("qcmNote", total);
+		request.setAttribute("showRightAnswers", qcm.getAnswersShown());
+		
+		// TODO: push valid answers if needed
+		
 	}
 
 }
