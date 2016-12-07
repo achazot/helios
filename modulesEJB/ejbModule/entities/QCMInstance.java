@@ -20,7 +20,7 @@ public class QCMInstance
 	@ManyToOne
 	private User student;
 	@ManyToOne
-	private QCM original;
+	private QCM origin;
 	private boolean done;
 	private int note;
 	private int trials;
@@ -47,14 +47,14 @@ public class QCMInstance
 		this.student = student;
 	}
 	
-	@Column(name="original")
-	public QCM getOriginal()
+	@Column(name="origin")
+	public QCM getOrigin()
 	{
-		return original;
+		return origin;
 	}
-	public void setOriginal(QCM original)
+	public void setOrigin(QCM origin)
 	{
-		this.original = original;
+		this.origin = origin;
 	}
 	
 	@Column(name="done")

@@ -22,3 +22,16 @@ INSERT INTO "QCM" VALUES(200, TRUE, null, null, 20, null, 20, 101);
 INSERT INTO "QUESTION" VALUES (20, 10, 'Quelle est la taille du zizi?', 200) ; 
 INSERT INTO "QUESTION" VALUES (30, 2, 'Quelle est la taille du fesse?', 200) ;
 INSERT INTO "QUESTION" VALUES (40, 2, 'Quelle est la taille du amour?', 200) ; 
+INSERT INTO "ANSWER" VALUES (100, '10cm', FALSE, 20) ; 
+INSERT INTO "ANSWER" VALUES (101, '14cm', FALSE, 20) ; 
+INSERT INTO "ANSWER" VALUES (102, '70cm', FALSE, 20) ; 
+INSERT INTO "ANSWER" VALUES (103, 'normal', TRUE, 20) ; 
+INSERT INTO "ANSWER" VALUES (104, 'moyen', FALSE, 30) ; 
+INSERT INTO "ANSWER" VALUES (105, 'tres petit', TRUE, 30) ; 
+INSERT INTO "ANSWER" VALUES (106, 'petit', TRUE, 30) ; 
+INSERT INTO "ANSWER" VALUES (108, 'gros', FALSE, 30) ; 
+INSERT INTO "ANSWER" VALUES (109, 'nul', FALSE, 40) ; 
+INSERT INTO "ANSWER" VALUES (110, 'gigantesque', TRUE, 40) ; 
+INSERT INTO "ANSWER" VALUES (111, 'petit chose', TRUE, 40) ; 
+INSERT INTO "ANSWER" VALUES (112, 'réponse fausse', FALSE, 40) ; 
+

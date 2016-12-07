@@ -1,5 +1,6 @@
 package entities;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-public class Answer 
+public class Answer
 {
 	@Id
 	@GeneratedValue

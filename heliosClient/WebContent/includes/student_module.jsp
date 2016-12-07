@@ -19,7 +19,7 @@
 					<c:otherwise>
 						<form method="post" action="StudentController"> 
 							<input type="hidden" name="openMod" value="${module.id}">
-							<input type="hidden" name="openQCM" value="${chapter.id}">
+							<input type="hidden" name="openChapter" value="${chapter.id}">
 							<button type="submit" name="studentops" value="doqcm">Faire le QCM</button>
 						</form>
 					</c:otherwise>

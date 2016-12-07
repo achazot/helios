@@ -56,7 +56,8 @@ public class TeacherController extends HttpServlet
 	
 	@SuppressWarnings("deprecation")
 	private void handleTeacherOps(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{	
+	{			
+		@SuppressWarnings("unchecked")
 		List<Module> mList 	= (List<Module>)request.getSession().getAttribute("mList"); 
 		User user 			= (User) 		request.getSession().getAttribute("user"); 
 		Module module 		= (Module) 		request.getSession().getAttribute("module"); 

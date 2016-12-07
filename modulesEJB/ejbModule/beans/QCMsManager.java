@@ -9,10 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+
 import entities.Answer;
 import entities.Chapter;
 import entities.QCM;
+import entities.QCMInstance;
 import entities.Question;
+import entities.User;
 
 @Stateless
 @LocalBean
@@ -73,11 +76,13 @@ public class QCMsManager
 		return qcm;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public QCM getQCMByChapter( Chapter chapter )
 	{
 		Query query = em.createQuery("Select c from QCM c where c.chapter = ?1");
 		query.setParameter(1, chapter);
-		return (QCM) query.getResultList().get(0);	
+		List<Object> rl = query.getResultList();
+		return rl.isEmpty() ? null : (QCM) rl.get(0);	
 	}
 
 	public Question findQuestionByPK(int questId) 
@@ -109,4 +114,14 @@ public class QCMsManager
 	{
 		question.addAnswer(answer);
 	}
+	
+	public QCMInstance getQCMInstance( QCM origin, User student ) 
+	{
+		Query query = em.createQuery("Select q from QCMInstance q where q.origin = ?1 and q.student = ?2");
+		query.setParameter(1, origin);
+		query.setParameter(2, student);
+
+		return query.getResultList().isEmpty() ? null : (QCMInstance) query.getResultList().get(0) ;
+	}
+	
 }

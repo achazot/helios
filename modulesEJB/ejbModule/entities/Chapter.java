@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -13,6 +14,7 @@ public class Chapter
 	@GeneratedValue
 	private int id;
 	private String title;
+	@Lob
 	private String text;
 	private boolean qcm; 
 	@ManyToOne

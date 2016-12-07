@@ -15,6 +15,8 @@ import beans.QCMsManager;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
+import entities.QCMInstance;
+import entities.Question;
 import entities.User;
 
 @WebServlet("/StudentController")
@@ -83,10 +85,18 @@ public class StudentController extends HttpServlet
     		break;
     		
     	case "doqcm":
+    		Chapter openChapter = modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")));
     		request.setAttribute("module", modsManager.getModule(Integer.parseInt(request.getParameter("openMod"))));
-    		request.setAttribute("chapter", modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter"))));
-    		request.setAttribute("qcm", qcmManager.getQCMByChapter(
-    				modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")))));
+    		request.setAttribute("chapter", openChapter);
+    		QCM qcm = qcmManager.getQCMByChapter(openChapter);
+    		request.setAttribute("qcm", qcm);
+    		List<Question> qList = qcmManager.getQuestions( qcm ); 
+    		request.setAttribute("qList", qList);
+
+    		//TODO:Display old qcm
+    		//QCMInstance qcmInst = qcmManager.getQCMInstance(qcm, user);
+    		//request.setAttribute("qcmInst", qcmInst);
+    		
     		request.getSession().setAttribute("viewPage", "./includes/student_qcm.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
