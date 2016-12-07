@@ -143,5 +143,13 @@ public class ModulesManager
 		
 		em.persist(chapter);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Subscription> getSubscriptionsByModule( Module m )
+	{
+		Query query = em.createQuery("Select s from Subscription s where s.module = ?1");
+		query.setParameter(1, m);
+		return query.getResultList();
+	}
 
 }
