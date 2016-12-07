@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.ModulesManager;
 import beans.QCMsManager;
+import entities.Answer;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
@@ -101,9 +103,71 @@ public class StudentController extends HttpServlet
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
+    	case "validateQCM":
+    		validateQCM(request, response, user);
+    		
+    		/*
+    		request.getSession().setAttribute("viewPage", "./includes/student_qcm.jsp");
+    		request.getRequestDispatcher("home.jsp").forward(request, response);
+    		*/
+    		break;
+    		
     	default:
     		break;
     	}		
 	}
 
+	private void validateQCM (HttpServletRequest request, HttpServletResponse response, User user) throws IOException
+	{
+		Module module = modsManager.getModule(Integer.parseInt(request.getParameter("moduleId")));
+		QCM qcm = qcmManager.findQCMByPK(Integer.parseInt(request.getParameter("qcmId")));
+		int total = 0;
+		
+		Map<String,String[]> parameters = request.getParameterMap();
+		
+		response.getWriter().append("\nParsing: \n");
+		for (String s : parameters.keySet())
+		{
+			int qId; 
+			try 
+			{
+				qId = Integer.parseInt(s);
+			}
+			catch (NumberFormatException e)
+			{
+				continue;
+			}
+			
+			Question question = qcmManager.findQuestionByPK(qId);
+			if (question == null) continue;
+			boolean qGood = true;
+
+			for (String p : parameters.get(s))
+			{
+				int ansId; 
+				try 
+				{
+					ansId = Integer.parseInt(request.getParameter(p));
+				}
+				catch (NumberFormatException e)
+				{
+					continue;
+				}
+				
+				Answer answer = qcmManager.getAnswer(ansId);
+				if ( answer != null &&  answer.getValid() == false) qGood = false;
+			}
+			
+			if (qGood) total += question.getPoints();
+		}
+		
+		boolean done = (total >= qcm.getMinimum());
+		
+		qcmManager.updateQCMInstance(qcm, user, done, total);
+		
+		if (done) modsManager.incrementSubscription(user, module);
+	}
+
 }
+
+
