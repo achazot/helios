@@ -164,11 +164,13 @@ public class StudentController extends HttpServlet
 		}
 		
 		boolean done = (total >= qcm.getMinimum());
-		qcmManager.updateQCMInstance(qcm, user, done, total);
+		qcmManager.updateQCMInstance(qcm, user, done, total, modsManager.getSubscriptionByStudentAndModule(user, module));
 		if (done) modsManager.incrementSubscription(user, module);
 		
 		request.setAttribute("qcmSuccess", done);
-		request.setAttribute("qcmNote", total);
+		request.setAttribute("qcmUserNote", total);
+		request.setAttribute("qcmMinimum", qcm.getMinimum());
+		request.setAttribute("qcmNote", qcm.getMinimum());
 		request.setAttribute("showRightAnswers", qcm.getAnswersShown());
 		
 		// TODO: push valid answers if needed
