@@ -79,7 +79,7 @@ public class StudentController extends HttpServlet
     		request.getRequestDispatcher("home.jsp").forward(request, response);
     		break;
     		
-    	case "readchapter":
+    	case "readchapter": // local changes to the following files w
     		request.setAttribute("module", modsManager.getModule(Integer.parseInt(request.getParameter("openMod"))));
     		request.setAttribute("chapter", modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter"))));
     		request.getSession().setAttribute("viewPage", "./includes/student_chapter.jsp");
