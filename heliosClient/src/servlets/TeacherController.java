@@ -255,6 +255,11 @@ public class TeacherController extends HttpServlet
 	{
 		List<Subscription> sList = modsManager
 				.getSubscriptionsByModule( (Module) request.getSession().getAttribute( "module" ) );
-		request.getSession().setAttribute("subscriptions", sList);
+		for(Subscription s : sList)
+		{
+			if (s.getProgress() > 0) 
+				System.out.println(">>>>>>>" + s.getInstances().get(0).getNote());
+		}
+		request.getSession().setAttribute( "subscriptions", sList );
 	}
 }

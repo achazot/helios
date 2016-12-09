@@ -157,6 +157,7 @@ public class StudentController extends HttpServlet
         		request.getSession().setAttribute("actionPage", "student_chapter.jsp");
         		break;
     		}
+
     		
     	case "doqcm":
     		Chapter openChapter = modsManager.getChapter(Integer.parseInt(request.getParameter("openChapter")));
