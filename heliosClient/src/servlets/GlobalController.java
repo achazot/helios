@@ -76,7 +76,8 @@ public class GlobalController extends HttpServlet
     			request.getSession().setAttribute("user", user);
     			request.getSession().setAttribute("trials", 0);
     			request.getSession().setAttribute("viewPage", "./includes/" + user.getGrp() + ".jsp");
-    	    	request.getRequestDispatcher("home.jsp").forward(request, response);
+    			String upperCaseGroup = user.getGrp().substring(0, 1).toUpperCase() + user.getGrp().substring(1);
+    			request.getRequestDispatcher("/" + upperCaseGroup + "Controller").forward(request, response);
     		}
     		else
     		{

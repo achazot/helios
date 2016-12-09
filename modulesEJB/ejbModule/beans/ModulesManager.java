@@ -132,6 +132,7 @@ public class ModulesManager
 	{
 		return (Chapter) em.find(Chapter.class, id);
 	}
+	
 
 	public void createChapter(String chapTitle, String chapText, Module module) 
 	{

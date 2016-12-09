@@ -37,6 +37,10 @@ public class AdminController extends HttpServlet
 	{				
 		if (request.getParameter("adminops") != null)
 			handleAdminOps(request, response);
+		else
+		{
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

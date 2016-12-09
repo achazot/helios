@@ -59,11 +59,10 @@
 			</c:if>	
 		</header>
 		
-    	<% String viewpage =(String) session.getAttribute("viewPage"); %>
+		
+		<jsp:include page= "includes/modals.jsp"/>    	
+    	<jsp:include page= "${viewPage}"/>
     	
-    	<jsp:include page= "<%=viewpage%>">
-			<jsp:param name="test" value="<%=user%>"/>
-    	</jsp:include>
 		<footer> 
 			Footer
 		</footer>

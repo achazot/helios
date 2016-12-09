@@ -10,7 +10,6 @@
 					<c:choose>
 						<c:when test="${accessList.get(chapter)}">
 							<form method="post" action="StudentController">
-								<input type="hidden" name="openMod" value="${module.id}">
 								<input type="hidden" name="openChapter" value="${chapter.id}">
 								<button type="submit" name="studentops" value="readchapter">Lire le chapitre</button>
 							</form>
@@ -20,7 +19,6 @@
 								</c:when>	
 								<c:otherwise>
 									<form method="post" action="StudentController"> 
-										<input type="hidden" name="openMod" value="${module.id}">
 										<input type="hidden" name="openChapter" value="${chapter.id}">
 										<button type="submit" name="studentops" value="doqcm">Faire le QCM</button>
 									</form>

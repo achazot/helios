@@ -40,6 +40,11 @@ public class TeacherController extends HttpServlet
 	{		
 		if (request.getParameter("teacherops") != null)
 			handleTeacherOps(request, response);
+		else
+		{
+			request.getSession().setAttribute("viewPage", "./includes/teacher.jsp");
+			request.getRequestDispatcher("home.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

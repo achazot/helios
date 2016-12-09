@@ -16,6 +16,7 @@ INSERT INTO "SUBSCRIPTION" VALUES(193, '2010-01-01', 2, 91, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(194, '1970-01-01', 0, 94, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(195, '1970-01-01', 0, 95, 'sheitan');
 INSERT INTO "SUBSCRIPTION" VALUES(196, '1970-01-01', 0, 91, 'jazzy');
+INSERT INTO "CHAPTER" VALUES(102, true, 'thomas ne dois jamais savoir', 'Chapitre 1 : Le test', 95);
 INSERT INTO "CHAPTER" VALUES(100, true, 'La théorie des graphes c est très très bien', 'Chapitre 1 : Introduction', 91);
 INSERT INTO "CHAPTER" VALUES(101, true, 'Le lemme de l etoile', 'Chapitre 2 : Choses serieuses', 91);
 INSERT INTO "QCM" VALUES(200, TRUE, '1970-01-01', '2020-01-01', 20, null, 20, 100);
