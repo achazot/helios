@@ -1,6 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<aside>
+<nav>
 	<h2> Menu </h2>
 	
 	<ul>	
@@ -49,5 +49,7 @@
 			</c:if>
 		</li>
 	</ul>
-</aside>
-<jsp:include page= "${actionPage}"/>
+</nav>
+<section>
+	<jsp:include page= "${actionPage}"/>
+</section>

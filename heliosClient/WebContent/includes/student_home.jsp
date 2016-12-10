@@ -7,8 +7,8 @@
 	<c:forEach items="${nextQCMs}" var="qcm">
 	<li> 
 		<form method="post" action="StudentController"> 
-			<input type="hidden" name="openChapter" value="${qcm.chapter}">
-			<button type="submit" name="studentops" value="doqcm">${qcm.getChapter().title}</button>
+			<input type="hidden" name="openChapter" value="${qcm.chapter.id}">
+			<button type="submit" name="studentops" value="doqcm">${qcm.chapter.module.title} : ${qcm.chapter.title}</button>
 		</form>
 		A réaliser pour le ${qcm.expiration}
 	</li>		

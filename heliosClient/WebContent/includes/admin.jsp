@@ -2,6 +2,7 @@
 <h2> hello admin </h2>
 
 <!-- Find students -->
+<section>
 <h1>Lister les étudiants inscrits</h1>
 <form method="post" action="AdminController"> 
 	<button type="submit" name="adminops" value="browseStudents">Go</button>
@@ -91,6 +92,6 @@
 		</c:if>
 	</c:when>
 </c:choose>
-
+</section>
 
 

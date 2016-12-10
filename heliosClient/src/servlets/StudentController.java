@@ -53,11 +53,13 @@ public class StudentController extends HttpServlet
 			User user = (User) request.getSession().getAttribute("user");
 			List<Module> mList = modsManager.getModules( );
 			List<Module> mSubsList = modsManager.getModules( user );
+    		List<QCM> qList = getNextQCMs (user);
 
 			request.getSession().setAttribute("modules", mList);
      		request.getSession().setAttribute("subs", mSubsList);
        		request.getSession().setAttribute("menuShowModules", false);
        		request.getSession().setAttribute("menuShowSubs", false);
+    		request.getSession().setAttribute("nextQCMs", qList);
        		request.getSession().setAttribute("actionPage", "student_home.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
 		}
@@ -90,14 +92,8 @@ public class StudentController extends HttpServlet
 
     	case "home":
     	{
-    		/*
-    		List<Module> mSubsList = modsManager.getModules( user );
-    		List<QCM> qList = new ArrayList<QCM>();
-    		for (Module m : mSubsList)
-    		{
-    			for ()
-    		}
-    		*/
+    		List<QCM> qList = getNextQCMs (user);
+    		request.getSession().setAttribute("nextQCMs", qList);
     		request.getSession().setAttribute("actionPage", "student_home.jsp");
     		break;
     	}
@@ -284,6 +280,26 @@ public class StudentController extends HttpServlet
 
 	}
 
+	private List<QCM> getNextQCMs ( User user )
+	{
+		List<Module> mSubsList = modsManager.getModules( user );
+		List<QCM> qList = new ArrayList<QCM>();
+		for (Module m : mSubsList)
+		{
+			List<Chapter> cList = modsManager.getChapters(m);
+			for (Chapter c : cList)
+			{
+				QCM q = qcmManager.getQCMByChapter(c);
+				if (qcmManager.getQCMInstance(q, user) == null)
+				{
+					qList.add(q);
+					break;
+				}
+			}
+		}
+		return qList;
+	}
+	
 }
 
 

@@ -3,7 +3,7 @@
 <%@ page import="entities.User" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="fr">
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<head>
@@ -14,6 +14,7 @@
 		
 		<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
 		        rel = "stylesheet">
+		<link href = "css/styles.css" rel = "stylesheet">
 		<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>    
 		<!-- Javascript date picker -->
@@ -32,36 +33,36 @@
 	
 	<body>
 	
-		<header> 
-			Header
-			<form method="post" action="GlobalController">
-		        <button type="submit" name="userops" value="disconnect">Déconnexion</button>
-		    </form>
+		<header>
 		
-			<% User user = (User) session.getAttribute("user"); %>	
-			
-			<h2>Voir les informations vous concernant</h2>
-			
-			<form method="post" action="GlobalController"> 
-				<button type="submit" name="userops" value="infos">Go</button>
-			</form>
-			
-			<!-- Personal informations -->
-			<c:if test="${not empty infos}">		
-				<ul>
-					<li> Prénom : <%=user.getName()%>
-					<li> Nom : <%=user.getSurname()%>
-				    <li> MdP : <%=user.getPassword()%>
-					<li> Mail : <%=user.getMail()%>
-					<li> Login : <%=user.getLogin()%>
-					<li> Groupe : <%=user.getGrp()%>
+			<a href="/helios"><img src="img/helios_logo.svg" style="height: 48px;"/></a>
+
+			<div tabindex="0" class="onclick-menu">
+				<div class="onclick-menu-label">
+					<span><b>${user.login}&nbsp&nbsp</b></span>
+					<img src="img/user.svg" class="onclick-menu-icon"/>
+				</div>
+				<!-- Personal informations -->
+				<ul class="onclick-menu-content clearfix">
+					<li> Prénom : ${user.name} </li>
+					<li> Nom : ${user.surname} </li>
+					<li> Mail : ${user.mail} </li>
+					<li> Login : ${user.login} </li>
+					<li> Groupe : ${user.grp} </li>
+					<li>
+						<form method="post" action="GlobalController">
+					        <button type="submit" name="userops" value="disconnect" style="pointer-events: auto;">Déconnexion</button>
+					    </form>
+					</li>
 				</ul>	
-			</c:if>	
+			</div>	
 		</header>
 		
-		
 		<jsp:include page= "includes/modals.jsp"/>    	
-    	<jsp:include page= "${viewPage}"/>
+
+		<div class="page-container">
+    		<jsp:include page= "${viewPage}"/>
+    	</div>
     	
 		<footer> 
 			Footer
