@@ -7,24 +7,92 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
+
+html
+{
+	min-height:100%;
+	height: 100%;
+}
+
 body
 {
 	font-family: 'Open Sans';font-size: 18px;
-	background: #f3f1f1;
+	background: #e7e6e5;
 	color: #4e4f4b;
+	margin: 0;
+	min-height:100%;
+	height: 100%;
+}
+
+.login-body
+{
+	background: -moz-linear-gradient(top,  #ffffff 0%, #c1bdba 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#c1bdba 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #ffffff 0%,#c1bdba 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c1bdba',GradientType=0 ); /* IE6-9 */
+	height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 	
 }
+
+.wrapper
+{
+	display: flex;
+	flex-flow: column;
+	flex-direction: column;
+	min-height:calc(100% - 100px);
+	max-height: 100%;
+}
+
+.placeholder
+{
+  flex: 1 1 auto;
+		overflow-y: auto;
+	
+}
+
 footer
 {
-	
+    background: #4e4f4b;
+    color: #e7e6e5;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height:100px;
+
+    display: flex;
+    align-items: center; 
+	justify-content: space-around;
+	text-align: center;
+
+  flex: 0 1 100px;
+
+
+	/*
+    height:100px;
+    width: 100%;
+    background-image: none;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-position: 0% 0%;
+    position: fixed;
+    bottom: 0pt;
+    left: 0pt;
+	*/
 }
 
 header
 {
-	padding: 8px;
+    margin-left:-10px;
+    margin-right:0;
+    margin-top:-10px;
+   	padding: 28px;
 	display: flex;
 	justify-content: space-between;
-	background: #eae2dd;
+	background: #c1bdba;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+	
 }
 
 nav 
@@ -34,10 +102,6 @@ nav
 	max-width: 20em;
 }
 
-section
-{
-
-}
 
 .index-section
 {
@@ -46,17 +110,19 @@ section
 
 .index-logo
 {
-    width: 40%;
+    width: 400px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 5%;
+    margin-top: 5%;
 }
 
 .page-container
 {
     display: flex;
 	flex-wrap: wrap;
+	flex: 1;
 }
 
 /********** Profile menu **********/
@@ -64,7 +130,7 @@ section
 .onclick-menu
 {
     position: absolute;
-	right: 0;
+	right: 28px;
     display: inline-block;
 	pointer-events: none;
 }
@@ -82,27 +148,29 @@ section
 	outline: none;
     opacity: 1;
     visibility: visible;
-	right: 0;	
 }
 
 .onclick-menu-content
 {
 	pointer-events: none;
-	background: #eae2dd;
-	margin-top: 2px;
-	margin-right: 8px;
-	padding-right: 8px;
+	background: #c1bdba;
+	margin-top: 32px;
+	padding-right: 40px;
 	padding-top: 8px;
 	padding-bottom: 8px;
     z-index: 1;
-    position: relative;
+    position: absolute;
+    right: -28px;
     opacity: 0;
     visibility: hidden;
     transition: visibility 0.5s;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    
 }
 
 .onclick-menu-label
 {
+	cursor: pointer; cursor: hand;
 	color: #4e4f4b;
 	display: flex;
 	justify-content: flex-end;
@@ -113,6 +181,112 @@ section
 
 .onclick-menu-icon
 {
-	margin-right: 16px;
-	height: 48px;
+	height: 64px;
 }
+
+
+
+
+
+
+.form h2 {
+	color: #FF773D;
+	text-shadow: 2px 2px #3E3F3B;
+}
+.form {
+	position: relative;
+	z-index: 1;
+	background: #4e4f4b;
+	max-width: 360px;
+	margin: 0 auto 100px;
+	padding: 45px;
+	padding-top: 6px;
+	text-align: center;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+	outline: 0;
+	background: #4e4f4b;
+	color: #c1bdba;
+	width: 100%;
+	border: 1px solid #c1bdba;
+	margin: 0 0 15px;
+	padding: 15px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+.form button {
+	text-transform: uppercase;
+	outline: 0;
+	background: #FF773D;
+	width: 100%;
+	border: 0;
+	padding: 10px;
+	color: #FFFFFF;
+	font-size: 18px;
+	font-weight: bold;
+	-webkit-transition: all 0.3 ease;
+	transition: all 0.3 ease;
+	cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+	background: #F73E3E;
+}
+
+
+button
+{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 100%;
+	outline: none;
+	cursor: pointer; cursor: hand;
+}
+
+ul
+{
+  list-style-type: none;
+}
+
+.menu
+{
+  padding: 0;
+  border-left: 3px solid orange;
+}
+
+.btn-expand:hover
+{
+  border-left: 3px solid orange;
+}
+
+.btn-expand
+{
+  border-left: 3px solid transparent;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;  
+  background: transparent;
+  animation-name: list_anim;
+}
+
+.btn-action
+{
+	border:none;
+	background: transparent;
+	font-size: 100%;
+	text-decoration: underline;
+}
+
+.btn-delete
+{
+	display: inline-flex;
+	align-items: center; 
+	border:none;
+	background: transparent;
+	color: #822339;
+}
+
+.btn-delete:hover
+{
+	text-decoration: underline;
+}
+

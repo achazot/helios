@@ -13,19 +13,22 @@
 		
 	</head>
 	
-	<body>
+	<body class="login-body">
 		<section class="index-section">
 			<a href="/helios"><img src="img/helios_logo.svg" class="index-logo"/></a>
 			
-			<h2>Authentification</h2>
-				<form method="post" action="GlobalController">
-				 	<input type="text" name="login" value ="bertho"/>
+			<div class="form">
+				<h2>Authentification</h2>
+				<form method="post" action="GlobalController" class="login-form">
+					<input type="text" name="login" value ="bertho"/>
 					<input type="password" name="password" value ="azerty"/>
-			        <button type="submit" name="userops" value="connect">Connexion</button>
-			    </form>
-			<c:if test="${trials > 0}">
-				<p> Tentatives de connexion: ${trials} </p>
-			</c:if>				    
+					<button type="submit" name="userops" value="connect">Connexion</button>
+				</form>
+				<c:if test="${trials > 0}">
+					<p> Tentatives de connexion: ${trials} </p>
+				</c:if>				    
+			</div>
+
 
 		</section>
 	</body>

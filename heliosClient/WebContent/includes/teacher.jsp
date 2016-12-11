@@ -4,26 +4,30 @@
 <nav>
 	<h2> Menu </h2>
 	
-	<form method="post" action="TeacherController"> 
-		<button type="submit" name="teacherops" value="browseModules">Go</button>
-	</form>
-	
-	<!-- Display module list -->
-	<c:choose>
-		<c:when test="${not empty modules}">
-			Les modules trouvés sont :
+	<ul class = "menu">
+		<li>
+			<form method="post" action="StudentController"> 
+				<button type="submit" name="teacherops" value="home" class="btn-action">Accueil</button>
+			</form>
+		</li>
+		<li>
+			<form method="post" action="TeacherController"> 
+				<button type="submit" name="teacherops" value="browseModules" class="btn-expand">+&nbsp; Modules tutorés</button>
+			</form>
+			<c:if test="${not empty modules}">
 				<ul>
 					<c:forEach items="${modules}" var="module">
-					<li> ${module.title}
-					<!-- Operate on current entry -->		
+					<li> 
 						<form method="post" action="TeacherController"> 
 							<input type="hidden" name="module" value="${module.id}">
-							<button type="submit" name="teacherops" value="viewModule"> Voir </button>
+							<button type="submit" name="teacherops" value="viewModule" class="btn-action">${module.title}</button>
 						</form>
+					</li>
 					</c:forEach>
 				</ul>
-		</c:when>
-	</c:choose>
+			</c:if>
+		</li>
+	</ul>
 </nav>
 <section>
 	<jsp:include page= "${actionPage}"/>

@@ -8,7 +8,7 @@
 	<li> 
 		<form method="post" action="StudentController"> 
 			<input type="hidden" name="openChapter" value="${qcm.chapter.id}">
-			<button type="submit" name="studentops" value="doqcm">${qcm.chapter.module.title} : ${qcm.chapter.title}</button>
+			<button type="submit" name="studentops" value="doqcm" class="btn-action">${qcm.chapter.module.title} : ${qcm.chapter.title}</button>
 		</form>
 		A réaliser pour le ${qcm.expiration}
 	</li>		
@@ -20,10 +20,11 @@
 <ul>
 	<c:forEach items="${subs}" var="sub">
 	<li> 
-		<form method="post" action="StudentController"> 
+		<form method="post" action="StudentController" style="display: inline-block;"> 
 			<input type="hidden" name="openMod" value="${sub.id}">
-			<button type="submit" name="studentops" value="openmodule">${sub.title}</button>
-		</form>				
+			<button type="submit" name="studentops" value="openmodule" class="btn-action">${sub.title}</button>
+		</form>
+		: ${percentageMap.get(sub)}%				
 	</li>		
 	</c:forEach>
 </ul>
@@ -35,7 +36,7 @@
 	<li> 
 		<form method="post" action="StudentController"> 
 			<input type="hidden" name="subMod" value="${module.id}">
-			<button type="submit" name="studentops" value="subscribe">${module.title}</button>
+			<button type="submit" name="studentops" value="subscribe" class="btn-action">${module.title}</button>
 		</form>				
 	</li>		
 	</c:forEach>

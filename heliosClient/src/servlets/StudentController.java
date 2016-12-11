@@ -19,6 +19,7 @@ import entities.Answer;
 import entities.Chapter;
 import entities.Module;
 import entities.QCM;
+import entities.QCMInstance;
 import entities.Question;
 import entities.Subscription;
 import entities.User;
@@ -54,11 +55,32 @@ public class StudentController extends HttpServlet
 			List<Module> mList = modsManager.getModules( );
 			List<Module> mSubsList = modsManager.getModules( user );
     		List<QCM> qList = getNextQCMs (user);
+    		Map<Module, Integer> percentageMap = new HashMap<Module, Integer>();
+    		
+    		for (Module m : mSubsList)
+    		{
+    			float total = 0;
+    			List<Chapter> cList = modsManager.getChapters(m);
+    			if (!cList.isEmpty())
+    			{
+	    			for (Chapter c : cList)
+	    			{
+	    				QCM q = qcmManager.getQCMByChapter(c);
+	    				QCMInstance cur = qcmManager.getQCMInstance(q, user);
+	    				if (cur!=null)
+	    					total += (float)cur.getNote() / (float)(q.getTotal() * cList.size());
+	    			}
 
+    			}
+    			total *= 100.f;
+    			percentageMap.put(m, (int)total);
+    		}
+    		
+    		request.getSession().setAttribute("percentageMap", percentageMap);
 			request.getSession().setAttribute("modules", mList);
      		request.getSession().setAttribute("subs", mSubsList);
        		request.getSession().setAttribute("menuShowModules", false);
-       		request.getSession().setAttribute("menuShowSubs", false);
+       		request.getSession().setAttribute("menuShowSubs", true);
     		request.getSession().setAttribute("nextQCMs", qList);
        		request.getSession().setAttribute("actionPage", "student_home.jsp");
     		request.getRequestDispatcher("home.jsp").forward(request, response);
@@ -92,7 +114,31 @@ public class StudentController extends HttpServlet
 
     	case "home":
     	{
+			List<Module> mSubsList = modsManager.getModules( user );
     		List<QCM> qList = getNextQCMs (user);
+    		Map<Module, Integer> percentageMap = new HashMap<Module, Integer>();
+    		
+    		for (Module m : mSubsList)
+    		{
+    			float total = 0;
+    			List<Chapter> cList = modsManager.getChapters(m);
+    			if (!cList.isEmpty())
+    			{
+	    			for (Chapter c : cList)
+	    			{
+	    				QCM q = qcmManager.getQCMByChapter(c);
+	    				QCMInstance cur = qcmManager.getQCMInstance(q, user);
+	    				if (cur!=null)
+	    					total += (float)cur.getNote() / (float)(q.getTotal() * cList.size());
+	    			}
+
+    			}
+    			total *= 100.f;
+    			percentageMap.put(m, (int)total);
+    		}
+    		
+     		request.getSession().setAttribute("subs", mSubsList);
+    		request.getSession().setAttribute("percentageMap", percentageMap);
     		request.getSession().setAttribute("nextQCMs", qList);
     		request.getSession().setAttribute("actionPage", "student_home.jsp");
     		break;
@@ -121,7 +167,8 @@ public class StudentController extends HttpServlet
     		}
     		else
     		{
-        		request.setAttribute("pushModal", "alreadySubscribed");
+        		openModule(request, response, user, Integer.parseInt(request.getParameter("subMod")));
+        		request.getSession().setAttribute("actionPage", "student_module.jsp");
         		break;
     		}
     		

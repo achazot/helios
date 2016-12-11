@@ -32,11 +32,9 @@
 	</head>
 	
 	<body>
-	
+		<div class="wrapper">
 		<header>
-		
-			<a href="/helios"><img src="img/helios_logo.svg" style="height: 48px;"/></a>
-
+			<a href="/helios"><img src="img/helios_logo.svg" style="height: 64px;"/></a>
 			<div tabindex="0" class="onclick-menu">
 				<div class="onclick-menu-label">
 					<span><b>${user.login}&nbsp&nbsp</b></span>
@@ -49,9 +47,9 @@
 					<li> Mail : ${user.mail} </li>
 					<li> Login : ${user.login} </li>
 					<li> Groupe : ${user.grp} </li>
-					<li>
+					<li><br/>
 						<form method="post" action="GlobalController">
-					        <button type="submit" name="userops" value="disconnect" style="pointer-events: auto;">Déconnexion</button>
+					        <button type="submit" name="userops" value="disconnect" style="pointer-events: auto;" class="btn-action">Déconnexion</button>
 					    </form>
 					</li>
 				</ul>	
@@ -64,8 +62,16 @@
     		<jsp:include page= "${viewPage}"/>
     	</div>
     	
+    	<div class="placeholder">
+    		<br/>
+    	</div>
+    	
+    	</div>
+    	
 		<footer> 
-			Footer
+			<span>Lisa Aubry<br/>Alban Chazot</span>
+			<span><img src="img/sun.svg" style="width:64px;" alt="Helios 2016"/></span>
+			<span>No contact<br/>Full contact</span>
 		</footer>
 	
 	</body>
