@@ -13,13 +13,13 @@
 		
 	</head>
 	
-	<body class="login-body">
+	<body class="index-body">
 		<section class="index-section">
 			<a href="/helios"><img src="img/helios_logo.svg" class="index-logo"/></a>
 			
-			<div class="form">
+			<div class="index-form">
 				<h2>Authentification</h2>
-				<form method="post" action="GlobalController" class="login-form">
+				<form method="post" action="GlobalController">
 					<input type="text" name="login" value ="bertho"/>
 					<input type="password" name="password" value ="azerty"/>
 					<button type="submit" name="userops" value="connect">Connexion</button>

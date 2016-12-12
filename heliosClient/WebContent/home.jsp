@@ -33,41 +33,41 @@
 	</head>
 	
 	<body>
+	
+	
 		<div class="wrapper">
-		<header>
-			<a href="/helios"><img src="img/helios_logo.svg" style="height: 64px;"/></a>
-			<div tabindex="0" class="onclick-menu">
-				<div class="onclick-menu-label">
-					<span><b>${user.login}&nbsp&nbsp</b></span>
-					<img src="img/user.svg" class="onclick-menu-icon"/>
-				</div>
-				<!-- Personal informations -->
-				<ul class="onclick-menu-content clearfix">
-					<li> Prénom : ${user.name} </li>
-					<li> Nom : ${user.surname} </li>
-					<li> Mail : ${user.mail} </li>
-					<li> Login : ${user.login} </li>
-					<li> Groupe : ${user.grp} </li>
-					<li><br/>
-						<form method="post" action="GlobalController">
-					        <button type="submit" name="userops" value="disconnect" style="pointer-events: auto;" class="btn-action">Déconnexion</button>
-					    </form>
-					</li>
-				</ul>	
-			</div>	
-		</header>
 		
-		<jsp:include page= "includes/modals.jsp"/>     	
-
-		<div class="page-container">
-    		<jsp:include page= "${viewPage}"/>
+			<header>
+				<a href="/helios"><img src="img/helios_logo.svg" style="height: 64px;"/></a>
+				<div tabindex="0" class="onclick-menu">
+					<div class="onclick-menu-label">
+						<span><b>${user.login}&nbsp&nbsp</b></span>
+						<img src="img/user.svg" class="onclick-menu-icon"/>
+					</div>
+					<!-- Personal informations -->
+					<ul class="onclick-menu-content clearfix">
+						<li> Prénom : ${user.name} </li>
+						<li> Nom : ${user.surname} </li>
+						<li> Mail : ${user.mail} </li>
+						<li> Login : ${user.login} </li>
+						<li> Groupe : ${user.grp} </li>
+						<li><br/>
+							<form method="post" action="GlobalController">
+						        <button type="submit" name="userops" value="disconnect" style="pointer-events: auto;" class="btn-action">Déconnexion</button>
+						    </form>
+						</li>
+					</ul>	
+				</div>	
+			</header>
+			
+			<jsp:include page= "includes/modals.jsp"/>     	
+	
+			<div class="page-container">
+	    		<jsp:include page= "${viewPage}"/>
+	    	</div>
+	    	    	
     	</div>
     	
-    	<div class="placeholder">
-    		<br/>
-    	</div>
-    	
-    	</div>
     	
 		<footer> 
 			<span>Lisa Aubry<br/>Alban Chazot</span>

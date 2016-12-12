@@ -37,7 +37,13 @@ public class TeacherController extends HttpServlet
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{		
+	{
+		if (!((User)request.getSession().getAttribute("user")).getGrp().equals("teacher"))
+		{
+			request.getSession().invalidate();
+			request.getRequestDispatcher("GlobalController").forward(request, response);
+		}
+		
 		if (request.getParameter("teacherops") != null)
 			handleTeacherOps(request, response);
 		else
