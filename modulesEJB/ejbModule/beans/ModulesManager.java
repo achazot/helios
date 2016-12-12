@@ -28,7 +28,7 @@ public class ModulesManager
 	 * @param title
 	 * @param teacher
 	 */
-	public void createModule(String title, User teacher)
+	public Module createModule(String title, User teacher)
 	{
 		if (teacher.getGrp().equals("teacher"))
 		{
@@ -37,7 +37,9 @@ public class ModulesManager
 			module.setTeacher(teacher);
 			
 			em.persist(module);
+			return module; 
 		}
+		return null;
 	}
 
 	/**

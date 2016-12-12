@@ -42,8 +42,9 @@ public class TeacherController extends HttpServlet
 			handleTeacherOps(request, response);
 		else
 		{
+			request.getSession().setAttribute("modules", modsManager.getModules( (User) request.getSession().getAttribute("user") ));
 			request.getSession().setAttribute("viewPage", "./includes/teacher.jsp");
-    		request.getSession().setAttribute("actionPage", "teacher_home.jsp");
+    		request.getSession().setAttribute("actionPage", "teacher_home.jsp");	    		
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		}
 	}
@@ -155,7 +156,11 @@ public class TeacherController extends HttpServlet
     	case "viewSubscriptions":
     		request.getSession().setAttribute("actionPage", "teacher_subscriptions.jsp");
     		break;
-    		
+    		// get module form 
+    	case "getModuleForm":	
+    			request.setAttribute("showModuleForm", true);
+    			request.getSession().setAttribute("actionPage", "teacher_home.jsp");
+    		break;
     		// get chapter form 
     	case "getChapterForm":	
     			request.getSession().setAttribute("actionPage", "teacher_chapter.jsp");
@@ -168,7 +173,15 @@ public class TeacherController extends HttpServlet
     		request.getSession().setAttribute("isQCMCreated", "false");
     		request.getSession().setAttribute("actionPage", "teacher_qcm.jsp");
     		break;
-		
+    		// post module
+    		// create module
+    	case "addModule":
+    		String title = request.getParameter( "title" );
+    		Module newMod = modsManager.createModule(title, user);
+    		if(newMod !=  null)
+    			mList.add(newMod);
+    		request.getSession().setAttribute("actionPage", "teacher_home.jsp");
+    		break;
 	    	// post chapter
 			// create chapter
     	case "addChapter":	
