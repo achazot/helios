@@ -6,7 +6,7 @@
 	
 	<ul class = "menu">
 		<li>
-			<form method="post" action="StudentController"> 
+			<form method="post" action="TeacherController"> 
 				<button type="submit" name="teacherops" value="home" class="btn-action">Accueil</button>
 			</form>
 		</li>
