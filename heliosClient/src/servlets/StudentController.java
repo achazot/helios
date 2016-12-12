@@ -41,6 +41,12 @@ public class StudentController extends HttpServlet
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		if (!((User)request.getSession().getAttribute("user")).getGrp().equals("student"))
+		{
+			request.getSession().invalidate();
+			request.getRequestDispatcher("GlobalController").forward(request, response);
+		}
+		
 		/*
 		 * Handle student operations
 		 */
