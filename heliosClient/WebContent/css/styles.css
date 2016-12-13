@@ -52,6 +52,7 @@ nav
 	width: 20%;
 	min-width: 15em;
 	max-width: 20em;
+	margin-right: 16px;
 }
 
 footer
@@ -86,6 +87,7 @@ ul
 	flex: 1;
 	display:flex;
 	flex-flow:row wrap;
+	margin: 28px;
 }
 
 .wrapper
@@ -283,4 +285,31 @@ ul
 .index-form button:hover,.index-form button:active,.index-form button:focus
 {
 	background: #F73E3E;
+}
+
+/***********************************************/
+/******************** HOME *********************/
+/***********************************************/
+
+.home-section
+{
+	width: auto;
+	border: 1px solid grey;
+	margin-bottom: 40px;
+}
+
+.home-section h2
+{
+	float: left;
+	margin-top: -20px;
+	margin-left: 5px;
+	background: #E7E6E5;
+	position: absolute;
+}
+
+.home-section-content
+{
+	margin-top: 30px;
+	margin-left: 15px;
+	margin-bottom: 20px;
 }
