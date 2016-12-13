@@ -7,7 +7,8 @@
 <% java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy/MM/dd"); %>
 
 
- <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <!-- Create QCM  -->
 <h1>Créer un QCM</h1>
 
@@ -37,66 +38,79 @@
 			<button type="submit" name="teacherops" value="modifyQCM">Modifier</button>
 		</form>
 		
+		
 		<%-- Questions List --%>
 		<c:if  test="${not empty questions}">
-			<h1>Questions du QCM </h1>
-			<ul>
-				<c:forEach items="${questions}" var="question">
-				
-					<%-- Question view --%>
-					<li><strong> ${question.text} </strong><br>
-					<em>Question sur ${question.points}	points<br></em>
+			<section class="subsection">	
+				<h2>Questions du QCM </h2>
+				<div class="subsection-content">
 					<ul>
-						<c:forEach items="${question.answers}" var="answer">
-							<li>
-							<c:choose>
-								<c:when test="${answer.valid}">
-									<strong style="color: green;"> [ * ] </strong> 
-								</c:when> 
-								<c:otherwise> 
-									<strong style="color:red;"> [ * ] </strong> 
-								</c:otherwise> 
-							</c:choose>
-								Réponse " ${answer.text} "
+						<c:forEach items="${questions}" var="question">
+						
+							<%-- Question view --%>
+							<li><strong> ${question.text} </strong><br>
+							<em>Question sur ${question.points}	points<br></em>
+							<ul>
+								<c:forEach items="${question.answers}" var="answer">
+									<li>
+									<c:choose>
+										<c:when test="${answer.valid}">
+											<strong style="color: green;"> [ * ] </strong> 
+										</c:when> 
+										<c:otherwise> 
+											<strong style="color:red;"> [ * ] </strong> 
+										</c:otherwise> 
+									</c:choose>
+										Réponse " ${answer.text} "
+								</c:forEach>
+							</ul>
+							
+							<%-- Add Answer --%>
+							<form method="post" action="TeacherController">
+								
+								Ajouter une réponse à cette question <br>
+									<input type="text" name="answer" value="" required> <br>
+								
+								Indiquer si cette réponse est correcte <br>
+									<select name="valid">
+										<option value="yes">Oui</option>
+										<option value="no">non</option>
+						  			</select><br>
+			
+								<input type="hidden" name="questionID" value="${question.id}" required>
+								<input type="hidden" name="qcm" value="${qcm.id}" required>
+								<button type="submit" name="teacherops" value="addAnswer">Valider cette réponse</button>			
+							</form>
+							<br>
 						</c:forEach>
 					</ul>
-					
-					<%-- Add Answer --%>
-					<form method="post" action="TeacherController">
-						
-						Ajouter une réponse à cette question <br>
-							<input type="text" name="answer" value="" required> <br>
-						
-						Indiquer si cette réponse est correcte <br>
-							<select name="valid">
-								<option value="yes">Oui</option>
-								<option value="no">non</option>
-				  			</select><br>
-	
-						<input type="hidden" name="questionID" value="${question.id}" required>
-						<input type="hidden" name="qcm" value="${qcm.id}" required>
-						<button type="submit" name="teacherops" value="addAnswer">Valider cette réponse</button>			
-					</form>
-					<br>
-				</c:forEach>
-			</ul>
+				</div>	
+			</section>
 		</c:if>
+
 		
-		<%-- Add Question --%>
-		<form method="post" action="TeacherController">
-			<h1> Ajouter une nouvelle question </h1> 
-				<input type="text" name="question" value="" required>
-			<input type="number" name="points" min="1" max="100" required>
-			<input type="hidden" name="qcm" value="${qcm.id}" required>
-			<button type="submit" name="teacherops" value="addQuestion">Valider cette question</button>
-		</form>
+		<section class="subsection">
+			<h2> Ajouter une nouvelle question </h2> 
+			<div class="subsection-content">
+				<%-- Add Question --%>
+				<form method="post" action="TeacherController">
+					<input type="text" name="question" value="" required>
+					<input type="number" name="points" min="1" max="100" required>
+					<input type="hidden" name="qcm" value="${qcm.id}" required>
+					<button type="submit" name="teacherops" value="addQuestion">Valider cette question</button>
+				</form>
+			</div>
+		</section>
 		
-		<h1>Retour au module</h1>
-		<form method="post" action="TeacherController">
-			<input type="hidden" name="module" value="${module.id}">	
-			<button type="submit" name="teacherops" value="viewModule">Terminer</button>
-		</form>
-				
+		<section class="subsection">
+			<h2>Retour au module</h2>
+			<div class="subsection-content">
+				<form method="post" action="TeacherController">
+					<input type="hidden" name="module" value="${module.id}">	
+					<button type="submit" name="teacherops" value="viewModule">Terminer</button>
+				</form>
+			</div>
+		</section>	
 	</c:when>
 	
 	<c:otherwise>		

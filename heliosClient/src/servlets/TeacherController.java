@@ -236,7 +236,7 @@ public class TeacherController extends HttpServlet
 	    		request.setAttribute("questions", qList);
 	    		request.getSession().setAttribute("qcm", qcm);
     		}
-    		request.getSession().setAttribute("actionPage", "./includes/teacher_qcm.jsp");
+    		request.getSession().setAttribute("actionPage", "teacher_qcm.jsp");
 			break;
 			
 			// post answer
@@ -254,7 +254,7 @@ public class TeacherController extends HttpServlet
 	    		qcmManager.setAnswerToQuestion( question, answer );
 	    		List<Question> upQList = qcmManager.getQuestions( qcm );
 	    		request.getSession().setAttribute("questions", upQList);
-	    		request.getSession().setAttribute("viewPage", "./includes/teacher_qcm.jsp");    		
+	    		request.getSession().setAttribute("actionPage", "teacher_qcm.jsp");    		
 	    	}
     		break;
     		
