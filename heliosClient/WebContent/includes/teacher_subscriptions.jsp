@@ -22,7 +22,7 @@
 				
 				<c:if test="${subscription.progress != '0'}">
 					<c:forEach items="${subscription.getInstances()}" var="instance">
-						<td><ul><li>note ${instance.note} <li>essais ${instance.trials} <li>date ${instance.date.toLocaleString()}</td>
+						<td><ul><li>note : ${instance.note} <li>essais : ${instance.trials} <li>date : ${instance.date.toLocaleString()}</li></ul></td>
 					</c:forEach>
 					<br> 
 				</c:if>
