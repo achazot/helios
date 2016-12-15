@@ -31,14 +31,14 @@ public class QCMsManager
 	 * @param total
 	 * @param expiration
 	 * @param answersAreShown
+	 * @param min 
 	 */
-	public QCM createQCM( String title, Date creation,  Date expiration, boolean answersAreShown, Chapter chapter  )
+	public QCM createQCM( String title, Date creation,  Date expiration, boolean answersAreShown, Chapter chapter, int min  )
 	{
 		QCM qcm = new QCM();
 		
-		qcm.setTitle( title );
 		qcm.setTotal( 0 );
-		qcm.setMinimum( 100 );
+		qcm.setMinimum( min );
 		qcm.setCreation( creation );
 		qcm.setExpiration( expiration );
 		qcm.setAnswersShown( answersAreShown );

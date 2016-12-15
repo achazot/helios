@@ -71,10 +71,9 @@ public class UsersManager
 	public void deleteUser(String login)
 	{
 		User u = em.find(User.class, login);
+		
 		if(u != null)
-		{
 			em.remove(u);
-		}
 	}
 
 	public boolean createUser(String name, String surname, String mail, String group, String log, String password) 

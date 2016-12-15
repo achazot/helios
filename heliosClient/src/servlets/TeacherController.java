@@ -208,12 +208,13 @@ public class TeacherController extends HttpServlet
     			boolean showAnswers = ( request.getParameter( "showAnswers" ).equals( "yes" ) ); 
     			Date creation = new Date();
     			Date expiration = new Date( request.getParameter("expiration") );
-    			System.out.println(">>>>>>>>>>>< " + expiration );
+    			int min = Integer.parseInt( request.getParameter("minimum") );
+    			System.out.println(">>>>>>>>>>>< " + min );
     			if( creation.after(expiration) )
     				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
 	    		else
 	    		{	
-	    			qcm = qcmManager.createQCM( qcmTitle, creation, expiration, showAnswers, chapter );
+	    			qcm = qcmManager.createQCM( qcmTitle, creation, expiration, showAnswers, chapter, min );
 	    			request.setAttribute("qcm", qcm);
 	    			request.getSession().setAttribute("actionPage", "teacher_qcm.jsp");
 	    		}

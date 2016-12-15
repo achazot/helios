@@ -31,12 +31,10 @@
 		
 		<% session.setAttribute("isQCMCreated", "true"); %>
 		
-		Date d'expiration	: ${qcm.expiration} 						<br>
+		Date d'expiration	: 	${qcm.expiration} 						<br>
 		Total des points 	: 	${qcm.total} 							<br>
+		Minimum requis		: 	${qcm.minimum}							<br>
 		Affichage des réponses correctes : <c:if test="${qcm.answersShown}">Oui</c:if><c:if test="not ${qcm.answersShown}">Non</c:if>
-		<form method="post" action="TeacherController">
-			<button type="submit" name="teacherops" value="modifyQCM">Modifier</button>
-		</form>
 		
 		
 		<%-- Questions List --%>
@@ -117,12 +115,14 @@
 		<form method="post" action="TeacherController">
 		
 		   	Date d'expiration <br>
-				<input type = "date" name="expiration" id = "datepicker-5" required> <br> 
+				<input type = "text" name="expiration" id = "datepicker-5" required> <br> 
 			Souhaitez-vous donner les réponses correctes à la fin du QCM ? <br>
 				<select name="showAnswers">
 					<option value="yes">Oui</option>
 					<option value="no">non</option>
 			  	</select><br>
+			Entrer le minimum de points requis pour valider ce QCM (moyenne du total des points par défaut)
+			<input type = "number" name ="minimum" min="-1" required>  
 			<input type="hidden" name="module" value="${module.id}" required>
 			<input type="hidden" name="chapter" value="${chapter.id}" required>
 			<input type="hidden" name="isQCMCreated" value="false" required>					
