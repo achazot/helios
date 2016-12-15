@@ -132,6 +132,7 @@ public class TeacherController extends HttpServlet
 		switch(request.getParameter("teacherops"))
     	{	
 			// display modules list
+   	
     	case "browseModules":	
     		request.getSession().setAttribute("actionPage", "teacher_home.jsp");
     		break;

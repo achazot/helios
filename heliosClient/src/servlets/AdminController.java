@@ -80,12 +80,6 @@ public class AdminController extends HttpServlet
     		request.setAttribute("teachers", tList);
     		break;
     		
-    	case "delete":	// delete user 
-    		String login = (String) request.getParameter("login");
-    		usersManager.deleteUser(login);
-    		request.removeAttribute("login");
-    		break;
-    		
     	case "getForm":	// get account form
     		request.setAttribute("accountForm", "1");
     		break;	

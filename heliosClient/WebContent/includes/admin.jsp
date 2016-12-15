@@ -11,25 +11,11 @@
 	<!-- Display students list-->
 	<c:if test="${not empty students}">
 			Les étudiants trouvés sont :
-		<table>
-
+		<ul>
 			<c:forEach items="${students}" var="student">
-			  <tr>
-			    <th>
-			    	${student.name} ${student.surname}
-			    </th>
-			    <th>
-					<form method="post" action="AdminController"> 
-						<input type="hidden" name="login" value="${student.login}">
-						<button type="submit" name="adminops" value="delete" class="btn-delete">
-							<img src="img/icon_delete.svg"  style="width: 24px; margin-right: 4px;"/>Supprimer
-						</button>
-					</form>
-			    </th> 
-			  </tr>
+			  <li> ${student.name} ${student.surname} </li>
 			</c:forEach>
-
-		</table>
+		</ul>
 	</c:if>
 	
 	
@@ -40,25 +26,11 @@
 	<!-- Display teachers list -->
 	<c:if test="${not empty teachers}">
 			Les professeurs trouvés sont :
-		<table>
-
+		<ul>
 			<c:forEach items="${teachers}" var="teacher">
-			  <tr>
-			    <th>
-			    	${teacher.name} ${teacher.surname}
-			    </th>
-			    <th>
-					<form method="post" action="AdminController"> 
-						<input type="hidden" name="login" value="${teacher.login}">
-						<button type="submit" name="adminops" value="delete" class="btn-delete">
-							<img src="img/icon_delete.svg"  style="width: 24px; margin-right: 4px;"/>Supprimer
-						</button>
-					</form>
-			    </th> 
-			  </tr>
+			   <li>	${teacher.name} ${teacher.surname} </li>
 			</c:forEach>
-
-		</table>
+		</ul>
 	</c:if>
 	
 	<!-- Create account -->

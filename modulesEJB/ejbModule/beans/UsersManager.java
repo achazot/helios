@@ -74,7 +74,6 @@ public class UsersManager
 		
 		if(u != null)
 			em.remove(u);
-	
 	}
 
 	public boolean createUser(String name, String surname, String mail, String group, String log, String password) 
