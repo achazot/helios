@@ -209,7 +209,6 @@ public class TeacherController extends HttpServlet
     			Date creation = new Date();
     			Date expiration = new Date( request.getParameter("expiration") );
     			int min = Integer.parseInt( request.getParameter("minimum") );
-    			System.out.println(">>>>>>>>>>>< " + min );
     			if( creation.after(expiration) )
     				request.setAttribute("errorForm", "Veuillez choisir une date d'expiration ultérieure à la date du jour svp");
 	    		else
@@ -277,11 +276,6 @@ public class TeacherController extends HttpServlet
 	{
 		List<Subscription> sList = modsManager
 				.getSubscriptionsByModule( (Module) request.getSession().getAttribute( "module" ) );
-		for(Subscription s : sList)
-		{
-			if (s.getProgress() > 0) 
-				System.out.println(">>>>>>>" + s.getInstances().get(0).getNote());
-		}
 		request.getSession().setAttribute( "subscriptions", sList );
 	}
 }
