@@ -6,7 +6,7 @@
 <html lang="en">
 	<head>
 	
-		<title>La base</title>
+		<title>Helios</title>
 		<meta name="description" content="Index">
 		<meta name="author" content="dibi & kcs">
 		<link href = "css/styles.css" rel = "stylesheet">
