@@ -91,7 +91,6 @@ public class QCMsManager
 		Question question = em.find(Question.class, questId);		
 		return question;
 	}
-	
 	public Answer createAnswer( String text, boolean valid, Question question)
 	{
 		Answer answer = new Answer();

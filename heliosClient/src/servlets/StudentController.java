@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -217,6 +218,12 @@ public class StudentController extends HttpServlet
     		}
     		else
     		{
+    			QCM tlqcm = qcmManager.getQCMByChapter(openChapter);
+    			if (tlqcm.getExpiration().before(new Date()))
+    			{
+            		request.setAttribute("pushModal", "tooLate");
+            		break;
+    			}
         		request.getSession().setAttribute("module", openChapter.getModule());
         		request.getSession().setAttribute("chapter", openChapter);
         		QCM qcm = qcmManager.getQCMByChapter(openChapter);

@@ -10,7 +10,7 @@
 			<input type="hidden" name="openChapter" value="${qcm.chapter.id}">
 			<button type="submit" name="studentops" value="doqcm" class="btn-action">${qcm.chapter.module.title} : ${qcm.chapter.title}</button>
 		</form>
-		A réaliser pour le ${qcm.expiration}
+		&nbsp;A réaliser pour le ${qcm.expiration.toLocaleString()}
 	</li>		
 	</c:forEach>
 </ul>
