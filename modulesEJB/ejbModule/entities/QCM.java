@@ -17,7 +17,6 @@ public class QCM
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String title; 
 	private int total;
 	private int minimum;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -33,12 +32,6 @@ public class QCM
 	public int getId()
 	{
 		return id; 
-	}
-	
-	@Column(name="title")
-	public String getTitle()
-	{
-		return title;
 	}
 	
 	@Column(name="total")
@@ -80,11 +73,6 @@ public class QCM
 	public void setId( int aid )
 	{
 		id = aid;
-	}
-
-	public void setTitle( String atitle )
-	{
-		title = atitle;
 	}
 
 	public void setTotal( int atotal )

@@ -20,7 +20,7 @@
 			<div class="index-form">
 				<h2>Authentification</h2>
 				<form method="post" action="GlobalController">
-					<input type="text" name="login" value ="bertho"/>
+					<input type="text" name="login" value ="harry"/>
 					<input type="password" name="password" value ="azerty"/>
 					<button type="submit" name="userops" value="connect">Connexion</button>
 				</form>

@@ -37,7 +37,6 @@ public class QCMsManager
 	{
 		QCM qcm = new QCM();
 		
-		qcm.setTitle( title );
 		qcm.setTotal( 0 );
 		qcm.setMinimum( min );
 		qcm.setCreation( creation );
