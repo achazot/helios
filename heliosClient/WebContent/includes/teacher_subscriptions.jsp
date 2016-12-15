@@ -16,13 +16,14 @@
 			<c:forEach items="${subscriptions}" var="subscription">
 				<tr>
 					<td> ${subscription.student.name} </td>
-					<td> ${subscription.date.toLocaleString()} </td>
+					<td> ${subscription.date.toLocaleString().substring(0, subscription.date.toLocaleString().lastIndexOf(' ')) } </td>
 					<td> ${subscription.progress} </td>
 
 				
 				<c:if test="${subscription.progress != '0'}">
 					<c:forEach items="${subscription.getInstances()}" var="instance">
-						note : ${instance.note} <li>essais : ${instance.trials} <li>date : ${instance.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' } ) }
+					 
+						<td><strong>note</strong> : ${instance.note}, <strong>essais</strong> : ${instance.trials}, <strong>date</strong> : ${instance.date.toLocaleString().substring(0, instance.date.toLocaleString().lastIndexOf(' ')) }<td> 
 					</c:forEach>
 					<br> 
 				</c:if>

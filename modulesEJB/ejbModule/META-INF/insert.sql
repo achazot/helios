@@ -1,12 +1,12 @@
 INSERT INTO "USER" VALUES('admin', 'admin','admin@helios.fr', 'Rogue', 'azerty', 'Severus');
 
 
-INSERT INTO "USER" VALUES('harry', 'student','harry.potter@helios.fr', 'Potter', 'azerty', 'Harry');
+INSERT INTO "USER" VALUES('harry', 'student','harry.potter@helios.fr', 'Harry', 'azerty', 'Potter');
 INSERT INTO "USER" VALUES('hermione', 'student','hermione.granger@helios.fr', 'Hermione', 'azerty', 'Granger');
 INSERT INTO "USER" VALUES('ron', 'student','ron.weasley@helios.fr', 'Ron', 'azerty', 'Weasley');
 
 INSERT INTO "USER" VALUES('albus', 'teacher','albus.dumbledore@helios.fr', 'Albus', 'azerty', 'Dumbledore' );
-INSERT INTO "USER" VALUES('minerva', 'teacher','minerva.mcgonagall@helios.fr', 'McGonagall', 'azerty', 'Minerva' );
+INSERT INTO "USER" VALUES('minerva', 'teacher','minerva.mcgonagall@helios.fr', 'Minerva', 'azerty', 'McGonagall' );
 
 INSERT INTO "MODULE" VALUES(1, 'Theorie des Graphes', 'albus');
 INSERT INTO "MODULE" VALUES(2, 'Intelligence Artificielle', 'minerva');
@@ -31,9 +31,9 @@ INSERT INTO "CHAPTER" VALUES(3, true, 'Le parcours en largeur est un algorithme 
 
 INSERT INTO "CHAPTER" VALUES(4, false, 'On connaît de nombreux exemples explicites de fonctions incalculables. Le plus courant est celui du problème de l’arrêt : il n’existe pas de programme universel qui prenne n’importe quel programme en argument et qui, en temps fini, renvoie « oui » si l’exécution du programme reçu en argument finit par s’arrêter et « non » s’il ne finit pas. Un autre exemple d’une fonction non calculable, plus perturbante dans un certain sens, est celle dite du castor affairé. Il s’agit d’une fonction bien définie, ayant des valeurs pour chaque entier, mais dont on ne peut pas calculer la valeur. Gregory Chaitin a introduit un nombre Ω qui a, entre autres, la particularité d’être parfaitement défini, mais dont la suite des décimales ne peut pas être donnée par une fonction calculable.', 'Chapitre 1 : Calculabilité', 3);
 
-INSERT INTO "QCM" VALUES(1, TRUE, '2016-10-01', '2017-01-01', 10,  20, 1);
-INSERT INTO "QCM" VALUES(2, TRUE, '2016-09-23', '2017-01-01', 10,  20, 2);
-INSERT INTO "QCM" VALUES(3, TRUE, '2016-10-17', '2016-12-25', 10,  20, 3);
+INSERT INTO "QCM" VALUES(1, TRUE, '2016-10-01', '2017-10-10', 10,  20, 1);
+INSERT INTO "QCM" VALUES(2, TRUE, '2016-09-23', '2017-10-10', 10,  20, 2);
+INSERT INTO "QCM" VALUES(3, TRUE, '2016-10-17', '2016-10-10', 10,  20, 3);
 
 
 INSERT INTO "QUESTION" VALUES (1, 10, 'Combien de représentations d’un graphe G existe-t-il ?', 1) ; 
@@ -83,5 +83,6 @@ INSERT INTO "QCMINSTANCE" VALUES(2, '2016-09-28', TRUE, 19, 5, 2, 'harry', 2) ;
 INSERT INTO "QCMINSTANCE" VALUES(3, '2016-10-20', TRUE, 20, 1, 1, 'hermione', 3) ; 
 INSERT INTO "QCMINSTANCE" VALUES(4, '2016-10-20', TRUE, 20, 1, 2, 'hermione', 4) ;
 INSERT INTO "QCMINSTANCE" VALUES(5, '2016-10-20', TRUE, 20, 1, 3, 'hermione', 5) ; 
+INSERT INTO "QCMINSTANCE" VALUES(6, '2016-10-20', TRUE, 20, 1, 3, 'hermione', 3) ; 
 
-INSERT INTO "QCMINSTANCE" VALUES(6, '2016-10-20', FALSE, 2, 8, 3, 'ron', 6) ; 
+INSERT INTO "QCMINSTANCE" VALUES(7, '2016-10-20', FALSE, 2, 8, 3, 'ron', 6) ; 
